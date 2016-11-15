@@ -1,0 +1,12 @@
+JOGL
+- Using GLCanvas within JPanel
+	1. Ensure JPanel layout is BorderLayout
+	2. To allow shrinking of JPanel, on GLEventListener.reshape(), 
+	   have to call GLCanvas.setMinimumSize to a predefined minsize
+		 -oddly, on reshape, this minimum size changes to reflect the bigger size
+		 
+Mouse events
+-Click event for a component only fires if mouse press and release 
+ occur within that same component
+-A mouse release is only fired for the component on which initial mouse press
+ was fired (but may be released outside the component).
