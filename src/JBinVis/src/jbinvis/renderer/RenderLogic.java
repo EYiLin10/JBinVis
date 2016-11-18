@@ -25,7 +25,7 @@ public abstract class RenderLogic {
      * Function called before a render
      * @param delta 
      */
-    public void update(double delta) { }
+    public void update(GL2 gl,double delta) { }
     
     /**
      * Called whenever the parent canvas is resized. glViewport has been called 
@@ -38,13 +38,19 @@ public abstract class RenderLogic {
     /**
      * Clean up
      */
-    public void dispose() { }
+    public void dispose(GL2 gl) { }
+    
+    /**
+     * Called when this logic is initially attached to the 
+     * canvas. Perform initialisations here.
+     */
+    public void init(GL2 gl) { }
     
     ////// USED INTERNALLY BY BINVIS CANVAS /////
-    void _dispose() { 
+    void _dispose(GL2 gl) { 
         if(!disposed) {
             disposed = true;
-            dispose();
+            dispose(gl);
         }
     }
     

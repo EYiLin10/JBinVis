@@ -9,9 +9,11 @@ import com.jogamp.opengl.GLCapabilities;
 import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLCanvas;
+import com.jogamp.opengl.util.FPSAnimator;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.util.HashSet;
+import java.util.PriorityQueue;
 
 /**
  * Encapsulates the canvas onto which all visualisations will be drawn. 
@@ -24,9 +26,12 @@ public class BinVisCanvas extends GLCanvas implements GLEventListener {
     // keep a history of render logic so they can all be disposed
     private HashSet<RenderLogic> renderLogics = new HashSet();
     private int nextId = 1000;
+    private PriorityQueue<RenderLogic> initQueue = new PriorityQueue();
     
     private RenderLogic renderLogic = null;
     private long lastCallTime = 0;
+    
+    private FPSAnimator animator;
     
     private BinVisCanvas(Container parent, GLCapabilities caps) {
         super(caps);
@@ -37,6 +42,10 @@ public class BinVisCanvas extends GLCanvas implements GLEventListener {
         
         lastCallTime = System.currentTimeMillis();
         this.setSize(300,300);
+        
+        // this will call the display function at 30 fps
+        this.animator = new FPSAnimator(this, 30, true);
+        this.animator.start();
     }
     
     /**
@@ -56,20 +65,31 @@ public class BinVisCanvas extends GLCanvas implements GLEventListener {
             // this render logic is being set here the first time
             render._setId(nextId++);
             renderLogics.add(render);
+            
+            // queue for init
+            initQueue.add(render);
         }
         this.renderLogic = render;
     }
 
     @Override
     public void init(GLAutoDrawable drawable) {
+        final GL2 gl = drawable.getGL().getGL2();
+        
+        gl.glEnable(GL2.GL_TEXTURE_2D);
     }
 
     @Override
     public void dispose(GLAutoDrawable drawable) {
+        final GL2 gl = drawable.getGL().getGL2();
+        
+        if(this.animator.isStarted())
+            animator.stop();
+        
         // call dispose on all render logics that were used here
         for(RenderLogic logic: renderLogics) {
             if(!logic.isDisposed()) {
-                logic.dispose();
+                logic.dispose(gl);
             }
         }
         renderLogic = null;
@@ -81,6 +101,12 @@ public class BinVisCanvas extends GLCanvas implements GLEventListener {
         double delta = 0;
         final GL2 gl = drawable.getGL().getGL2();
         
+        // check init queue
+        if(!initQueue.isEmpty()) {
+            RenderLogic q = initQueue.remove();
+            q.init(gl);
+        }
+        
         // calculate delta
         long curTime = System.currentTimeMillis();
         delta = (curTime - lastCallTime) / 1000.0;
@@ -88,7 +114,7 @@ public class BinVisCanvas extends GLCanvas implements GLEventListener {
         
         // update and rendering
         if(renderLogic!=null && !renderLogic.isDisposed()) {
-            renderLogic.update(delta);
+            renderLogic.update(gl,delta);
             renderLogic.render(gl, delta);
         }
         else {
