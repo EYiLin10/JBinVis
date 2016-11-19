@@ -10,6 +10,7 @@ import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.util.FPSAnimator;
+import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.util.HashSet;
@@ -41,7 +42,6 @@ public class BinVisCanvas extends GLCanvas implements GLEventListener {
         this.addGLEventListener(this);
         
         lastCallTime = System.currentTimeMillis();
-        this.setSize(300,300);
         
         // this will call the display function at 30 fps
         this.animator = new FPSAnimator(this, 30, true);
@@ -76,6 +76,7 @@ public class BinVisCanvas extends GLCanvas implements GLEventListener {
     public void init(GLAutoDrawable drawable) {
         final GL2 gl = drawable.getGL().getGL2();
         
+        gl.glDisable(GL2.GL_LIGHTING);
         gl.glEnable(GL2.GL_TEXTURE_2D);
     }
 
@@ -129,7 +130,7 @@ public class BinVisCanvas extends GLCanvas implements GLEventListener {
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
         final GL2 gl = drawable.getGL().getGL2();
         gl.glViewport(x,y,width,height);
-        
+
         this.setMinimumSize(minimumSize);
         
         if(renderLogic != null)

@@ -2,6 +2,7 @@
 package jbinvis.renderer;
 
 import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GL2;
 import java.nio.ByteBuffer;
 
 /**
@@ -73,7 +74,7 @@ public class CanvasTexture {
     }
     
     /**
-     * Binds the current texture
+     * Binds the current texture. Compatible with fixed-function pipeline.
      * @param gl 
      */
     public void bind(GL gl) {
