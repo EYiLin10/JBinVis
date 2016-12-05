@@ -51,16 +51,20 @@ public class CanvasTexture {
         gl.glBindTexture(GL.GL_TEXTURE_2D, 0);
     }
     
-    public void setPixel(int x, int y, byte r, byte g, byte b) {
+    public void setPixel(int x, int y, int r, int g, int b) {
         if(x<0 || x>=width || y<0 || y>=height)
             throw new IndexOutOfBoundsException("x and y values should be within dimensions");
         
         int offset = 3*(y*width + x);
-        pixels[offset] = r;
-        pixels[offset+1] = g;
-        pixels[offset+2] = b;
+        pixels[offset] = (byte)r;
+        pixels[offset+1] = (byte)g;
+        pixels[offset+2] = (byte)b;
         
         dirty = true;
+    }
+    
+    public void setPixel(int x, int y, int clrRGB) {
+        setPixel(x,y, (clrRGB & 0xFF0000) >> 16, (clrRGB & 0xFF00) >> 8, clrRGB & 0xFF);
     }
     
     /**

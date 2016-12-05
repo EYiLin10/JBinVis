@@ -13,15 +13,18 @@ import com.jogamp.opengl.util.FPSAnimator;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.util.HashSet;
 import java.util.PriorityQueue;
+import jbinvis.main.JBinVis;
 
 /**
  * Encapsulates the canvas onto which all visualisations will be drawn. 
  * This exposes the underlying OpenGL functions needed for rendering purposes.
  * @author Billy
  */
-public class BinVisCanvas extends GLCanvas implements GLEventListener {
+public class BinVisCanvas extends GLCanvas implements GLEventListener, MouseWheelListener {
     private static final Dimension minimumSize = new Dimension(2,2);
     
     // keep a history of render logic so they can all be disposed
@@ -32,6 +35,8 @@ public class BinVisCanvas extends GLCanvas implements GLEventListener {
     private RenderLogic renderLogic = null;
     private long lastCallTime = 0;
     
+    private final JBinVis jbinvis;
+    
     private FPSAnimator animator;
     
     private BinVisCanvas(Container parent, GLCapabilities caps) {
@@ -41,11 +46,15 @@ public class BinVisCanvas extends GLCanvas implements GLEventListener {
         // add event listeners
         this.addGLEventListener(this);
         
+        this.addMouseWheelListener(this);
+        
         lastCallTime = System.currentTimeMillis();
         
         // this will call the display function at 30 fps
         this.animator = new FPSAnimator(this, 30, true);
         this.animator.start();
+        
+        jbinvis = JBinVis.getInstance();
     }
     
     /**
@@ -135,5 +144,27 @@ public class BinVisCanvas extends GLCanvas implements GLEventListener {
         
         if(renderLogic != null)
             renderLogic.resize(width, height);
+    }
+
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent e) {
+        if(renderLogic!=null)
+            this.renderLogic.mouseWheelMoved(e);
+        
+        int multiplier;
+        if(e.getScrollType() == MouseWheelEvent.WHEEL_UNIT_SCROLL)
+            multiplier = e.getUnitsToScroll();
+        else 
+            multiplier = e.getWheelRotation();
+        
+        // move the offset
+        if(jbinvis.isLoaded()) {
+            long offset = jbinvis.getFileOffset();
+            long increment = 4096 * multiplier;
+            
+            
+            
+            jbinvis.setFileOffset(offset + increment);
+        }
     }
 }

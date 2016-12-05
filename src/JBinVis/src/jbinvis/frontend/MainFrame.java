@@ -3,92 +3,39 @@
  */
 package jbinvis.frontend;
 
-import com.jogamp.opengl.GL2;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
+import javax.swing.JFileChooser;
+import jbinvis.main.FileUpdateListener;
+import jbinvis.main.JBinVis;
 import jbinvis.renderer.BinVisCanvas;
-import jbinvis.renderer.CanvasShader;
-import jbinvis.renderer.CanvasTexture;
-import jbinvis.renderer.RenderLogic;
-import jbinvis.renderer.camera.Camera;
-import jbinvis.renderer.camera.OrthographicCamera;
+import jbinvis.visualisations.Bytemap;
 
 /**
  *
  * @author Billy
  */
-public class MainFrame extends javax.swing.JFrame {
+public class MainFrame extends javax.swing.JFrame implements FileUpdateListener, AdjustmentListener {
 
     private BinVisCanvas canvas = null;
+    private final JBinVis jbinvis;
     
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
         initComponents();
-        canvas = BinVisCanvas.create(panelCanvas);
-        canvas.setRenderLogic(new RenderLogic() { 
-            private CanvasShader shader;
-            private CanvasTexture texture;
-            private Camera camera = null;
-            
-            @Override
-            public void init(GL2 gl) 
-            {
-                shader = new CanvasShader(gl, "simple");
-                texture = new CanvasTexture(gl, 4, 4);
-                
-                for(int y=0;y<4;y++) {
-                    for(int x=0;x<4;x++) {
-                        texture.setPixel(x, y, (byte)(0xFF * (x % 2)), (byte)0, (byte)0);
-                    }
-                }
-                texture.update(gl);
-                
-                camera = new OrthographicCamera(gl);
-            }
-            
-            public void render(GL2 gl, double delta) {
-                gl.glClearColor(0.5f, 0.5f, 0.5f, 1);
-                gl.glClear(GL2.GL_COLOR_BUFFER_BIT);
-                
-                camera.update(gl);
-                texture.bind(gl);
-                shader.begin(gl);
-                
-                gl.glBegin(GL2.GL_TRIANGLES);
-                gl.glColor3d(1,0,1);
-                
-                gl.glTexCoord2d(0,0);
-                gl.glVertex3d(10, 10, 0);
-                gl.glTexCoord2d(1,0);
-                gl.glVertex3d(120, 10, 0);
-                gl.glTexCoord2d(1,1);
-                gl.glVertex3d(120, 120, 0);
-
-                gl.glTexCoord2d(0,0);
-                gl.glVertex3d(10, 10, 0);
-                gl.glTexCoord2d(1,1);
-                gl.glVertex3d(120, 120, 0);
-                gl.glTexCoord2d(0,1);
-                gl.glVertex3d(10, 120, 0);
-                gl.glEnd();
-                
-                shader.end(gl);
-                
-            }
-
-            @Override
-            public void resize(int width, int height) {
-                if(camera != null)
-                    camera.setViewportDimensions(width, height);
-            }
-            
-            public void dispose(GL2 gl) {
-                shader.dispose(gl);
-                texture.dispose(gl);
-            }
-        });
+        jbinvis = JBinVis.getInstance();
+        jbinvis.addFileUpdateListener(this);
         
-
+        canvas = BinVisCanvas.create(panelCanvas);
+        canvas.setRenderLogic(new Bytemap());
+        
+        menuCloseFile.setEnabled(false);
+        mainScrollBar.setEnabled(false);       
+        
+        mainScrollBar.addAdjustmentListener(this);
+        
     }
 
     /**
@@ -103,8 +50,12 @@ public class MainFrame extends javax.swing.JFrame {
         panelHeader = new javax.swing.JPanel();
         panelCanvas = new javax.swing.JPanel();
         panelFooter = new javax.swing.JPanel();
+        mainScrollBar = new javax.swing.JScrollBar();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        menuOpenFile = new javax.swing.JMenuItem();
+        menuCloseFile = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
         menuClose = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -146,12 +97,30 @@ public class MainFrame extends javax.swing.JFrame {
         );
 
         panelCanvas.add(panelFooter, java.awt.BorderLayout.PAGE_END);
+        panelCanvas.add(mainScrollBar, java.awt.BorderLayout.LINE_END);
 
         getContentPane().add(panelCanvas, java.awt.BorderLayout.CENTER);
 
         jMenu1.setText("File");
 
-        menuClose.setText("Close");
+        menuOpenFile.setText("Open File");
+        menuOpenFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuOpenFileActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuOpenFile);
+
+        menuCloseFile.setText("Close File");
+        menuCloseFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuCloseFileActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuCloseFile);
+        jMenu1.add(jSeparator1);
+
+        menuClose.setText("Exit");
         menuClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuCloseActionPerformed(evt);
@@ -169,6 +138,22 @@ public class MainFrame extends javax.swing.JFrame {
     private void menuCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCloseActionPerformed
         this.dispose();
     }//GEN-LAST:event_menuCloseActionPerformed
+
+    private void menuOpenFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuOpenFileActionPerformed
+        // prompt user for file
+        final JFileChooser fc = new JFileChooser();
+        int retval = fc.showOpenDialog(this);
+        
+        if(retval == JFileChooser.APPROVE_OPTION) {
+            jbinvis.loadFile(fc.getSelectedFile().getAbsolutePath());
+            menuCloseFile.setEnabled(true);
+        } 
+    }//GEN-LAST:event_menuOpenFileActionPerformed
+
+    private void menuCloseFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCloseFileActionPerformed
+        jbinvis.closeFile();
+        menuCloseFile.setEnabled(false);
+    }//GEN-LAST:event_menuCloseFileActionPerformed
 
     /**
      * @param args the command line arguments
@@ -208,9 +193,34 @@ public class MainFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JScrollBar mainScrollBar;
     private javax.swing.JMenuItem menuClose;
+    private javax.swing.JMenuItem menuCloseFile;
+    private javax.swing.JMenuItem menuOpenFile;
     private javax.swing.JPanel panelCanvas;
     private javax.swing.JPanel panelFooter;
     private javax.swing.JPanel panelHeader;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void fileOffsetUpdated() {
+    }
+
+    @Override
+    public void fileClosed() {
+        mainScrollBar.setEnabled(false);
+    }
+
+    @Override
+    public void fileOpened() {
+        mainScrollBar.setEnabled(true);
+    }
+
+    @Override
+    public void adjustmentValueChanged(AdjustmentEvent e) {
+        if(e.getSource().equals(mainScrollBar)) {
+            System.out.println(e.getValue());
+        }
+    }
 }

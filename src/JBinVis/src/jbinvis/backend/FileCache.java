@@ -88,9 +88,12 @@ public class FileCache {
     /**
      * Gets the byte value at the given offset into the file.
      * @param offset
-     * @return 
+     * @return -1 if offset is larger than file size
      */
     public int read(long offset) {
+        if(offset >= this.filesize) 
+            return -1;
+        
         int bankOffset = (int)(offset % BANK_SIZE); // offset into a bank
         int bankIndex = (int)((offset >> BANK_OFFSET_BITS) % BANK_COUNT); // which bank
         long bankTag = offset >> (BANK_OFFSET_BITS + BANK_COUNT_BITS); // bank tag
@@ -105,7 +108,15 @@ public class FileCache {
             // set the tag
             cache.tag = bankTag;
         }
-        return cache.data[bankOffset];
+        return (cache.data[bankOffset] & 0xFF);
+    }
+    
+    /**
+     * Gets the size of the file
+     * @return 
+     */
+    public long size() {
+        return filesize;
     }
     
     /**

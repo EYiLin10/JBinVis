@@ -4,13 +4,15 @@
 package jbinvis.renderer;
 
 import com.jogamp.opengl.GL2;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 
 /**
  * Every visualisation will extend this class. This interface represents
  * the different rendering logic that can be plugged into the BinVisCanvas.
  * @author Billy
  */
-public abstract class RenderLogic {
+public abstract class RenderLogic implements MouseWheelListener {
     private boolean disposed = false;
     private int renderLogicId = -1;
     
@@ -71,5 +73,13 @@ public abstract class RenderLogic {
      */
     public final boolean isDisposed() {
         return disposed;
+    }
+    
+    /////////////////////////////////////////////
+    // Event handlers
+    /////////////////////////////////////////////
+
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent e) {
     }
 }
