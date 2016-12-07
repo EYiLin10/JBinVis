@@ -3,22 +3,26 @@
  */
 package jbinvis.frontend;
 
+import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
+import java.awt.event.KeyEvent;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import jbinvis.main.FileUpdateListener;
 import jbinvis.main.JBinVis;
 import jbinvis.renderer.BinVisCanvas;
-import jbinvis.visualisations.Bytemap;
 
 /**
  *
  * @author Billy
  */
 public class MainFrame extends javax.swing.JFrame implements FileUpdateListener, AdjustmentListener {
-
+    
     private BinVisCanvas canvas = null;
     private final JBinVis jbinvis;
+    private BytemapSettingsPanel bytemapConfigPanel;
     
     /**
      * Creates new form MainFrame
@@ -29,13 +33,19 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
         jbinvis.addFileUpdateListener(this);
         
         canvas = BinVisCanvas.create(panelCanvas);
-        canvas.setRenderLogic(new Bytemap());
-        
+
         menuCloseFile.setEnabled(false);
         mainScrollBar.setEnabled(false);       
         
         mainScrollBar.addAdjustmentListener(this);
         
+        textOffset.setEnabled(false);
+        
+        // initialise config panels
+        bytemapConfigPanel = new BytemapSettingsPanel();
+        
+        // default to bytemap in the beginning
+        switchVisualisation(RenderLogicHolder.RL_BYTEMAP);
     }
 
     /**
@@ -47,57 +57,106 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panelHeader = new javax.swing.JPanel();
         panelCanvas = new javax.swing.JPanel();
-        panelFooter = new javax.swing.JPanel();
         mainScrollBar = new javax.swing.JScrollBar();
+        panelSidebar = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        labelVisualisationName = new javax.swing.JLabel();
+        panelOffset = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        textOffset = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        labelFileSize = new javax.swing.JLabel();
+        panelConfigPane = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuOpenFile = new javax.swing.JMenuItem();
         menuCloseFile = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         menuClose = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        menuBytemap = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(640, 640));
         setPreferredSize(new java.awt.Dimension(640, 640));
         setSize(new java.awt.Dimension(640, 640));
 
-        panelHeader.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        panelHeader.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-
-        javax.swing.GroupLayout panelHeaderLayout = new javax.swing.GroupLayout(panelHeader);
-        panelHeader.setLayout(panelHeaderLayout);
-        panelHeaderLayout.setHorizontalGroup(
-            panelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 695, Short.MAX_VALUE)
-        );
-        panelHeaderLayout.setVerticalGroup(
-            panelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 69, Short.MAX_VALUE)
-        );
-
-        getContentPane().add(panelHeader, java.awt.BorderLayout.PAGE_START);
-
         panelCanvas.setBackground(new java.awt.Color(153, 153, 153));
         panelCanvas.setLayout(new java.awt.BorderLayout());
-
-        panelFooter.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        panelFooter.setPreferredSize(new java.awt.Dimension(4, 80));
-
-        javax.swing.GroupLayout panelFooterLayout = new javax.swing.GroupLayout(panelFooter);
-        panelFooter.setLayout(panelFooterLayout);
-        panelFooterLayout.setHorizontalGroup(
-            panelFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 695, Short.MAX_VALUE)
-        );
-        panelFooterLayout.setVerticalGroup(
-            panelFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 76, Short.MAX_VALUE)
-        );
-
-        panelCanvas.add(panelFooter, java.awt.BorderLayout.PAGE_END);
         panelCanvas.add(mainScrollBar, java.awt.BorderLayout.LINE_END);
+
+        panelSidebar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        panelSidebar.setPreferredSize(new java.awt.Dimension(300, 460));
+        panelSidebar.setLayout(new java.awt.BorderLayout());
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel1.setPreferredSize(new java.awt.Dimension(296, 32));
+        jPanel1.setLayout(new java.awt.BorderLayout());
+
+        labelVisualisationName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(labelVisualisationName, java.awt.BorderLayout.CENTER);
+
+        panelSidebar.add(jPanel1, java.awt.BorderLayout.PAGE_START);
+
+        panelOffset.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        panelOffset.setAlignmentY(0.0F);
+        panelOffset.setMinimumSize(new java.awt.Dimension(100, 40));
+        panelOffset.setName(""); // NOI18N
+        panelOffset.setPreferredSize(new java.awt.Dimension(296, 50));
+
+        jLabel2.setText("Offset");
+        jLabel2.setToolTipText("");
+
+        textOffset.setText("0");
+        textOffset.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                textOffsetFocusLost(evt);
+            }
+        });
+        textOffset.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                textOffsetKeyPressed(evt);
+            }
+        });
+
+        jLabel3.setText("/");
+
+        labelFileSize.setText("  ");
+
+        javax.swing.GroupLayout panelOffsetLayout = new javax.swing.GroupLayout(panelOffset);
+        panelOffset.setLayout(panelOffsetLayout);
+        panelOffsetLayout.setHorizontalGroup(
+            panelOffsetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelOffsetLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(textOffset, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelFileSize, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        panelOffsetLayout.setVerticalGroup(
+            panelOffsetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelOffsetLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelOffsetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(textOffset, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(labelFileSize))
+                .addContainerGap(11, Short.MAX_VALUE))
+        );
+
+        panelSidebar.add(panelOffset, java.awt.BorderLayout.PAGE_END);
+
+        panelConfigPane.setLayout(new java.awt.BorderLayout());
+        panelSidebar.add(panelConfigPane, java.awt.BorderLayout.CENTER);
+
+        panelCanvas.add(panelSidebar, java.awt.BorderLayout.LINE_START);
 
         getContentPane().add(panelCanvas, java.awt.BorderLayout.CENTER);
 
@@ -130,6 +189,19 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
 
         jMenuBar1.add(jMenu1);
 
+        jMenu2.setText("View");
+
+        menuBytemap.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_1, 0));
+        menuBytemap.setText("Bytemap");
+        menuBytemap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuBytemapActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menuBytemap);
+
+        jMenuBar1.add(jMenu2);
+
         setJMenuBar(jMenuBar1);
 
         pack();
@@ -154,6 +226,44 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
         jbinvis.closeFile();
         menuCloseFile.setEnabled(false);
     }//GEN-LAST:event_menuCloseFileActionPerformed
+
+    private void menuBytemapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuBytemapActionPerformed
+        switchVisualisation(RenderLogicHolder.RL_BYTEMAP);
+    }//GEN-LAST:event_menuBytemapActionPerformed
+
+    private boolean updateOffsetFromText = false;
+    private void textOffsetFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textOffsetFocusLost
+        if(updateOffsetFromText) {
+            // validate the value of text box
+            String value = textOffset.getText();
+            
+            long offset = 0;
+            try {
+                offset = Long.parseLong(value);
+                jbinvis.setFileOffset(offset);
+            }
+            catch(NumberFormatException e) {
+                MsgBox("Offset value is incorrectly formatted", "Error");
+            }
+            
+            textOffset.setText(Long.toString(jbinvis.getFileOffset()));
+            updateOffsetFromText = false;
+        }
+    }//GEN-LAST:event_textOffsetFocusLost
+
+    private void textOffsetKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textOffsetKeyPressed
+        // blur this component upon pressing escape or enter
+        if(evt.getKeyCode() == KeyEvent.VK_ESCAPE) 
+        {
+            updateOffsetFromText = false;
+            textOffset.setText(Long.toString(jbinvis.getFileOffset()));
+            this.requestFocus();
+        }
+        else if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            updateOffsetFromText = true;
+            this.requestFocus();
+        }
+    }//GEN-LAST:event_textOffsetKeyPressed
 
     /**
      * @param args the command line arguments
@@ -191,30 +301,50 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JLabel labelFileSize;
+    private javax.swing.JLabel labelVisualisationName;
     private javax.swing.JScrollBar mainScrollBar;
+    private javax.swing.JMenuItem menuBytemap;
     private javax.swing.JMenuItem menuClose;
     private javax.swing.JMenuItem menuCloseFile;
     private javax.swing.JMenuItem menuOpenFile;
     private javax.swing.JPanel panelCanvas;
-    private javax.swing.JPanel panelFooter;
-    private javax.swing.JPanel panelHeader;
+    private javax.swing.JPanel panelConfigPane;
+    private javax.swing.JPanel panelOffset;
+    private javax.swing.JPanel panelSidebar;
+    private javax.swing.JTextField textOffset;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void fileOffsetUpdated() {
+        textOffset.setText(Long.toString(jbinvis.getFileOffset()));
     }
 
     @Override
     public void fileClosed() {
         mainScrollBar.setEnabled(false);
+        textOffset.setEnabled(false);
+        labelFileSize.setText("");
+        
+        setSettingsPanelEnabled(false);
     }
 
     @Override
     public void fileOpened() {
         mainScrollBar.setEnabled(true);
+        textOffset.setEnabled(true);
+        
+        textOffset.setText("0");
+        labelFileSize.setText(Long.toString(jbinvis.getFileSize()));
+        
+        setSettingsPanelEnabled(true);
     }
 
     @Override
@@ -222,5 +352,54 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
         if(e.getSource().equals(mainScrollBar)) {
             System.out.println(e.getValue());
         }
+    }
+    
+    /**
+     * Helper method to show dialog message box
+     */
+    private void MsgBox(String msg, String title) {
+        JOptionPane.showMessageDialog(this, msg, title, JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    /**
+     * Helper method to switch visualisations
+     * @param index Index of visualisation defined by the RL_* constants in RenderLogicHolder
+     */
+    private void switchVisualisation(int index) {
+        panelConfigPane.removeAll();
+        
+        switch(index) {
+            case RenderLogicHolder.RL_BYTEMAP:
+                this.panelConfigPane.add(bytemapConfigPanel, BorderLayout.CENTER);       
+                this.canvas.setRenderLogic(RenderLogicHolder.getInstance().get(RenderLogicHolder.RL_BYTEMAP));
+                break;
+        }
+        
+        panelConfigPane.validate();
+        
+        // settings panel should not be enabled if there is no file opened
+        setSettingsPanelEnabled(jbinvis.isLoaded());
+        
+        // display the visualisation name
+        if(canvas.getRenderLogic()!=null)
+            labelVisualisationName.setText(canvas.getRenderLogic().getName());
+        else
+            labelVisualisationName.setText("");
+    }
+    
+    /**
+     * Helper function to enable or disable the settings pane
+     */
+    private void setSettingsPanelEnabled(boolean enabled) {
+        Component obj = panelConfigPane.getComponent(0);
+        if(obj instanceof QuickEnable) {
+            if(enabled)
+                ((QuickEnable)obj).enableAll();
+            else
+                ((QuickEnable)obj).disableAll();
+        }
+        else
+            System.out.println("Warning: Settings panel " + obj.getClass().getName() + 
+                    " does not implement QuickEnable.");
     }
 }

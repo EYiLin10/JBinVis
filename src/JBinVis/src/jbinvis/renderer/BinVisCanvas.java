@@ -80,6 +80,10 @@ public class BinVisCanvas extends GLCanvas implements GLEventListener, MouseWhee
         }
         this.renderLogic = render;
     }
+    
+    public RenderLogic getRenderLogic() {
+        return this.renderLogic;
+    }
 
     @Override
     public void init(GLAutoDrawable drawable) {
@@ -161,8 +165,6 @@ public class BinVisCanvas extends GLCanvas implements GLEventListener, MouseWhee
         if(jbinvis.isLoaded()) {
             long offset = jbinvis.getFileOffset();
             long increment = 4096 * multiplier;
-            
-            
             
             jbinvis.setFileOffset(offset + increment);
         }

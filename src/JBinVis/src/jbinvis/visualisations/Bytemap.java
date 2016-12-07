@@ -6,6 +6,7 @@ package jbinvis.visualisations;
 import com.jogamp.opengl.GL2;
 import jbinvis.backend.FileCache;
 import jbinvis.main.JBinVis;
+import jbinvis.math.Hilbert;
 import jbinvis.renderer.CanvasShader;
 import jbinvis.renderer.CanvasTexture;
 import jbinvis.renderer.RenderLogic;
@@ -117,7 +118,7 @@ public class Bytemap extends RenderLogic implements jbinvis.main.FileUpdateListe
             return;
         
         long offset = jbinvis.getFileOffset();
-        int value;
+        int value, transformed;
         FileCache file = jbinvis.getFile();
         
         for(int i=0;i<PIXEL_COUNT;i++) {
@@ -126,7 +127,15 @@ public class Bytemap extends RenderLogic implements jbinvis.main.FileUpdateListe
             if(value < 0)
                 value = 0;
             
-            texture.setPixel(i & 0x1FF, i >> 9, 0, value, 0);
+            transformed = Hilbert.xy(i);
+            
+            texture.setPixel(transformed & 0x1FF, transformed >> 9, 0,value,0 );
         }
     }
+    
+    @Override
+    public String getName() {
+        return "Bytemap";
+    }
+    
 }

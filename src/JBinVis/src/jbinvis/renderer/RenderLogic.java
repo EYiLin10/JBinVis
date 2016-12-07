@@ -48,6 +48,11 @@ public abstract class RenderLogic implements MouseWheelListener {
      */
     public void init(GL2 gl) { }
     
+    /**
+     * Gets the name of this visualisation
+     */
+    public String getName() { return ""; }
+    
     ////// USED INTERNALLY BY BINVIS CANVAS /////
     void _dispose(GL2 gl) { 
         if(!disposed) {
@@ -63,6 +68,7 @@ public abstract class RenderLogic implements MouseWheelListener {
     int _getId() {
         return this.renderLogicId;
     }
+    
     
     /////////////////////////////////////////////
 

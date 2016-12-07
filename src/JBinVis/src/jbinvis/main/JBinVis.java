@@ -8,6 +8,7 @@ import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import jbinvis.backend.FileCache;
 import jbinvis.frontend.MainFrame;
+import jbinvis.math.Hilbert;
 
 /**
  *
@@ -133,6 +134,9 @@ public class JBinVis {
     public static void main(String[] args) {        
         // create singleton instance
         _singleton = new JBinVis();
+        
+        // initialise Hilbert curve
+        Hilbert.getInstance();
         
         MainFrame frame = new MainFrame();
         frame.setTitle("JBinVis");
