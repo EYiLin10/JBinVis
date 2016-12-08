@@ -1,7 +1,13 @@
 /*
  *  
  */
-package jbinvis.frontend;
+package jbinvis.frontend.settingspanel;
+
+import javax.swing.JComboBox;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerListModel;
+import javax.swing.SpinnerNumberModel;
+import jbinvis.frontend.QuickEnable;
 
 /**
  *
@@ -15,6 +21,9 @@ public class BytemapSettingsPanel extends javax.swing.JPanel implements QuickEna
     public BytemapSettingsPanel() {
         initComponents();
         disableAll();
+        
+        spinnerPixelSize.setModel(new SpinnerListModel(new Object[] {1,2,4,8,16,32}));
+        spinnerScanwidth.setModel(new SpinnerNumberModel(1, 1,512, 1));
     }
 
     /**
@@ -142,4 +151,26 @@ public class BytemapSettingsPanel extends javax.swing.JPanel implements QuickEna
         spinnerPixelSize.setEnabled(false);
         spinnerScanwidth.setEnabled(false);
     }
+
+    public JComboBox<String> getComboColourScheme() {
+        return comboColourScheme;
+    }
+
+    public JComboBox<String> getComboFunction() {
+        return comboFunction;
+    }
+
+    public JComboBox<String> getComboPixelFormat() {
+        return comboPixelFormat;
+    }
+
+    public JSpinner getSpinnerPixelSize() {
+        return spinnerPixelSize;
+    }
+
+    public JSpinner getSpinnerScanwidth() {
+        return spinnerScanwidth;
+    }
+    
+    
 }

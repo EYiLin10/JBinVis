@@ -4,6 +4,8 @@
 package jbinvis.renderer;
 
 import com.jogamp.opengl.GL2;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
@@ -12,7 +14,7 @@ import java.awt.event.MouseWheelListener;
  * the different rendering logic that can be plugged into the BinVisCanvas.
  * @author Billy
  */
-public abstract class RenderLogic implements MouseWheelListener {
+public abstract class RenderLogic implements MouseWheelListener, KeyListener {
     private boolean disposed = false;
     private int renderLogicId = -1;
     
@@ -88,4 +90,18 @@ public abstract class RenderLogic implements MouseWheelListener {
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
     }
+    
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+    }
+
+
 }

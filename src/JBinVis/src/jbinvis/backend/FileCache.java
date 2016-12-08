@@ -14,7 +14,7 @@ import java.io.RandomAccessFile;
  */
 public class FileCache {
         
-    public static final int BANK_COUNT_BITS = 4;
+    public static final int BANK_COUNT_BITS = 10;
     public static final int BANK_OFFSET_BITS = 16;
     public static final int BANK_COUNT = 1<<BANK_COUNT_BITS; 
     public static final int BANK_SIZE = 1<<BANK_OFFSET_BITS;
@@ -119,49 +119,4 @@ public class FileCache {
         return filesize;
     }
     
-    /**
-     * This is to test the reading of a file with and without FileCache
-     * @param args 
-     */
-    public static void main(String[] args) {
-        final int attemptCount = 500;
-        RandomAccessFile file;
-        try {
-            file = new RandomAccessFile("lib//gluegen-rt.jar", "r");
-        } catch(IOException e) {
-            return;
-        }
-        FileCache cache = new FileCache(file);
-        
-        // read
-        long tm;
-        double avgWith=0;
-        for(int a = 0;a<attemptCount;a++) {
-            tm=System.currentTimeMillis();
-            for(int i=0;i<65536;i++) {
-                cache.read(i+125);
-            }
-            avgWith += (System.currentTimeMillis() - tm) / 1000.0;
-        }
-        avgWith /= attemptCount;
-        
-        System.out.println("Average Time with FileCache: " + avgWith);
-        
-        double avgWithout=0;
-        for(int a = 0;a<attemptCount;a++) {
-            tm=System.currentTimeMillis();
-            try {
-            file.seek(125);
-                for(int i=0;i<65536;i++) 
-                    file.readByte();
-             } catch(IOException e) {}
-            avgWithout += (System.currentTimeMillis() - tm) / 1000.0;
-        }
-        avgWithout /= attemptCount;
-        System.out.println("Average Time without FileCache: " + avgWithout);
-        
-        System.out.format("Speedup: %.2fx\n", avgWithout / avgWith);
-        
-        cache.close();
-    }
 }

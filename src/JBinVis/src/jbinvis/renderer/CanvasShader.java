@@ -134,7 +134,7 @@ public class CanvasShader {
             return;
         }
         
-        initialised = true;        
+        initialised = true; 
     }
     
     /**
@@ -214,6 +214,10 @@ public class CanvasShader {
      */
     public boolean isInitialised() {
         return initialised;
+    }
+    
+    public int getUniformLocation(GL2 gl,String name) {
+        return gl.glGetUniformLocation(this.shaderprog, name);
     }
     
 }

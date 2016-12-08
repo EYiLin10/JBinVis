@@ -16,6 +16,10 @@ public class RenderLogicHolder {
         return _singleton;
     }
     
+    public static RenderLogic fromId(int index) {
+        return getInstance().get(index);
+    }
+    
     private RenderLogic[] renderLogics;
     private final int COUNT = 2;
     

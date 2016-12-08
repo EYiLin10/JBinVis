@@ -3,22 +3,26 @@
  */
 package jbinvis.frontend;
 
+import jbinvis.frontend.settingspanel.BytemapSettingsPanel;
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.event.AdjustmentEvent;
-import java.awt.event.AdjustmentListener;
 import java.awt.event.KeyEvent;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import jbinvis.main.FileUpdateListener;
 import jbinvis.main.JBinVis;
 import jbinvis.renderer.BinVisCanvas;
+import jbinvis.visualisations.Bytemap;
 
 /**
  *
  * @author Billy
  */
-public class MainFrame extends javax.swing.JFrame implements FileUpdateListener, AdjustmentListener {
+public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
+        ChangeListener
+    {
     
     private BinVisCanvas canvas = null;
     private final JBinVis jbinvis;
@@ -35,17 +39,19 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
         canvas = BinVisCanvas.create(panelCanvas);
 
         menuCloseFile.setEnabled(false);
-        mainScrollBar.setEnabled(false);       
-        
-        mainScrollBar.addAdjustmentListener(this);
-        
+
         textOffset.setEnabled(false);
+        sliderOffset.setEnabled(false);
+        
+        sliderOffset.addChangeListener(this);
         
         // initialise config panels
         bytemapConfigPanel = new BytemapSettingsPanel();
+        ((Bytemap)RenderLogicHolder.fromId(RenderLogicHolder.RL_BYTEMAP)).attachPanel(bytemapConfigPanel);
         
         // default to bytemap in the beginning
         switchVisualisation(RenderLogicHolder.RL_BYTEMAP);
+        
     }
 
     /**
@@ -58,16 +64,16 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
     private void initComponents() {
 
         panelCanvas = new javax.swing.JPanel();
-        mainScrollBar = new javax.swing.JScrollBar();
         panelSidebar = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         labelVisualisationName = new javax.swing.JLabel();
+        panelConfigPane = new javax.swing.JPanel();
         panelOffset = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         textOffset = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         labelFileSize = new javax.swing.JLabel();
-        panelConfigPane = new javax.swing.JPanel();
+        sliderOffset = new javax.swing.JSlider();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuOpenFile = new javax.swing.JMenuItem();
@@ -84,7 +90,6 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
 
         panelCanvas.setBackground(new java.awt.Color(153, 153, 153));
         panelCanvas.setLayout(new java.awt.BorderLayout());
-        panelCanvas.add(mainScrollBar, java.awt.BorderLayout.LINE_END);
 
         panelSidebar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         panelSidebar.setPreferredSize(new java.awt.Dimension(300, 460));
@@ -98,6 +103,11 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
         jPanel1.add(labelVisualisationName, java.awt.BorderLayout.CENTER);
 
         panelSidebar.add(jPanel1, java.awt.BorderLayout.PAGE_START);
+
+        panelConfigPane.setLayout(new java.awt.BorderLayout());
+        panelSidebar.add(panelConfigPane, java.awt.BorderLayout.CENTER);
+
+        panelCanvas.add(panelSidebar, java.awt.BorderLayout.LINE_START);
 
         panelOffset.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         panelOffset.setAlignmentY(0.0F);
@@ -124,6 +134,8 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
 
         labelFileSize.setText("  ");
 
+        sliderOffset.setValue(0);
+
         javax.swing.GroupLayout panelOffsetLayout = new javax.swing.GroupLayout(panelOffset);
         panelOffset.setLayout(panelOffsetLayout);
         panelOffsetLayout.setHorizontalGroup(
@@ -136,27 +148,26 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelFileSize, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                .addComponent(labelFileSize, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(sliderOffset, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
                 .addContainerGap())
         );
         panelOffsetLayout.setVerticalGroup(
             panelOffsetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelOffsetLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelOffsetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(textOffset, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(labelFileSize))
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addGroup(panelOffsetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelOffsetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(textOffset, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3)
+                        .addComponent(labelFileSize))
+                    .addComponent(sliderOffset, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        panelSidebar.add(panelOffset, java.awt.BorderLayout.PAGE_END);
-
-        panelConfigPane.setLayout(new java.awt.BorderLayout());
-        panelSidebar.add(panelConfigPane, java.awt.BorderLayout.CENTER);
-
-        panelCanvas.add(panelSidebar, java.awt.BorderLayout.LINE_START);
+        panelCanvas.add(panelOffset, java.awt.BorderLayout.PAGE_END);
 
         getContentPane().add(panelCanvas, java.awt.BorderLayout.CENTER);
 
@@ -191,7 +202,6 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
 
         jMenu2.setText("View");
 
-        menuBytemap.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_1, 0));
         menuBytemap.setText("Bytemap");
         menuBytemap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -310,7 +320,6 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JLabel labelFileSize;
     private javax.swing.JLabel labelVisualisationName;
-    private javax.swing.JScrollBar mainScrollBar;
     private javax.swing.JMenuItem menuBytemap;
     private javax.swing.JMenuItem menuClose;
     private javax.swing.JMenuItem menuCloseFile;
@@ -319,17 +328,48 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
     private javax.swing.JPanel panelConfigPane;
     private javax.swing.JPanel panelOffset;
     private javax.swing.JPanel panelSidebar;
+    private javax.swing.JSlider sliderOffset;
     private javax.swing.JTextField textOffset;
     // End of variables declaration//GEN-END:variables
 
+    // to prevent mutual recursion
+    private boolean ignoreStateChanged = false, ignoreOffsetUpdated = false;
+    
+    @Override
+    public void stateChanged(ChangeEvent e) {
+        
+        if(e.getSource() == sliderOffset) {
+            if(!jbinvis.isLoaded())
+                return;
+            
+            if(ignoreStateChanged)
+                ignoreStateChanged = false;
+            else {
+                double percentage = (double)sliderOffset.getValue() / sliderOffset.getMaximum();
+                ignoreOffsetUpdated = true;
+                jbinvis.setFileOffset((int)(percentage * jbinvis.getFileSize()));
+            }
+        }
+    }
+
+    
     @Override
     public void fileOffsetUpdated() {
         textOffset.setText(Long.toString(jbinvis.getFileOffset()));
+
+        if(ignoreOffsetUpdated)
+            ignoreOffsetUpdated = false;
+        else {
+            // update slider
+            double percentage = (double)jbinvis.getFileOffset() / jbinvis.getFileSize();
+            ignoreStateChanged = true;
+            sliderOffset.setValue((int)(percentage * sliderOffset.getMaximum()));
+        }
     }
 
     @Override
     public void fileClosed() {
-        mainScrollBar.setEnabled(false);
+        sliderOffset.setEnabled(false);
         textOffset.setEnabled(false);
         labelFileSize.setText("");
         
@@ -338,7 +378,7 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
 
     @Override
     public void fileOpened() {
-        mainScrollBar.setEnabled(true);
+        sliderOffset.setEnabled(true);
         textOffset.setEnabled(true);
         
         textOffset.setText("0");
@@ -347,12 +387,6 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
         setSettingsPanelEnabled(true);
     }
 
-    @Override
-    public void adjustmentValueChanged(AdjustmentEvent e) {
-        if(e.getSource().equals(mainScrollBar)) {
-            System.out.println(e.getValue());
-        }
-    }
     
     /**
      * Helper method to show dialog message box
@@ -402,4 +436,6 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
             System.out.println("Warning: Settings panel " + obj.getClass().getName() + 
                     " does not implement QuickEnable.");
     }
+
+ 
 }

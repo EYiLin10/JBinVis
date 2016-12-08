@@ -13,6 +13,8 @@ import com.jogamp.opengl.util.FPSAnimator;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.util.HashSet;
@@ -24,7 +26,7 @@ import jbinvis.main.JBinVis;
  * This exposes the underlying OpenGL functions needed for rendering purposes.
  * @author Billy
  */
-public class BinVisCanvas extends GLCanvas implements GLEventListener, MouseWheelListener {
+public class BinVisCanvas extends GLCanvas implements GLEventListener, MouseWheelListener, KeyListener {
     private static final Dimension minimumSize = new Dimension(2,2);
     
     // keep a history of render logic so they can all be disposed
@@ -47,6 +49,7 @@ public class BinVisCanvas extends GLCanvas implements GLEventListener, MouseWhee
         this.addGLEventListener(this);
         
         this.addMouseWheelListener(this);
+        this.addKeyListener(this);
         
         lastCallTime = System.currentTimeMillis();
         
@@ -164,9 +167,34 @@ public class BinVisCanvas extends GLCanvas implements GLEventListener, MouseWhee
         // move the offset
         if(jbinvis.isLoaded()) {
             long offset = jbinvis.getFileOffset();
-            long increment = 4096 * multiplier;
+            long increment = 16 * multiplier;
             
             jbinvis.setFileOffset(offset + increment);
         }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        long offset = jbinvis.getFileOffset();
+        long increment = 32;
+  
+        switch(e.getKeyCode()) {
+            case KeyEvent.VK_DOWN:
+                jbinvis.setFileOffset(offset + increment);
+                break;
+                
+            case KeyEvent.VK_UP:
+                jbinvis.setFileOffset(offset - increment);
+                break;
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
     }
 }
