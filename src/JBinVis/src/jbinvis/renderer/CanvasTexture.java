@@ -77,6 +77,13 @@ public class CanvasTexture {
                 GL.GL_RGB, GL.GL_UNSIGNED_BYTE, buffer);
     }
     
+    public void clear() {
+        for(int i=0;i<pixels.length/3;i++) {
+            pixels[i*3] = pixels[i*3+1] = pixels[i*3+2] = 0;
+        }
+        dirty = true;
+    }
+    
     /**
      * Binds the current texture. Compatible with fixed-function pipeline.
      * @param gl 

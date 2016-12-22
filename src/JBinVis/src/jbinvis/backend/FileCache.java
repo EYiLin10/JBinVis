@@ -91,7 +91,7 @@ public class FileCache {
      * @return -1 if offset is larger than file size
      */
     public int read(long offset) {
-        if(offset >= this.filesize) 
+        if(offset >= this.filesize || offset < 0) 
             return -1;
         
         int bankOffset = (int)(offset % BANK_SIZE); // offset into a bank

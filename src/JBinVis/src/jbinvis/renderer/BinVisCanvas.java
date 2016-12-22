@@ -33,6 +33,7 @@ public class BinVisCanvas extends GLCanvas implements GLEventListener, MouseWhee
     private HashSet<RenderLogic> renderLogics = new HashSet();
     private int nextId = 1000;
     private PriorityQueue<RenderLogic> initQueue = new PriorityQueue();
+    private PriorityQueue<RenderLogic> resizeQueue = new PriorityQueue();
     
     private RenderLogic renderLogic = null;
     private long lastCallTime = 0;
@@ -81,7 +82,17 @@ public class BinVisCanvas extends GLCanvas implements GLEventListener, MouseWhee
             // queue for init
             initQueue.add(render);
         }
+        // signal unattach
+        if(this.renderLogic != null) {
+            this.renderLogic.onUnattachFromCanvas(this);
+        }
+        
         this.renderLogic = render;
+        
+        // queue for resize
+        resizeQueue.add(render);
+        
+        this.renderLogic.onAttachToCanvas(this);
     }
     
     public RenderLogic getRenderLogic() {
@@ -122,6 +133,13 @@ public class BinVisCanvas extends GLCanvas implements GLEventListener, MouseWhee
         if(!initQueue.isEmpty()) {
             RenderLogic q = initQueue.remove();
             q.init(gl);
+        }
+        
+        if(!resizeQueue.isEmpty()) {
+            int[] dims = {0,0,0,0};
+            RenderLogic q = resizeQueue.remove();
+            gl.glGetIntegerv(GL2.GL_VIEWPORT, dims, 0);
+            q.resize(dims[2], dims[3]);
         }
         
         // calculate delta

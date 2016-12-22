@@ -21,15 +21,18 @@ public class RenderLogicHolder {
     }
     
     private RenderLogic[] renderLogics;
-    private final int COUNT = 2;
+    public final int COUNT = 3;
     
     public static final int RL_BYTEMAP = 0;
-    
+    public static final int RL_DIGRAPH = 1;
+    public static final int RL_FREQ_HISTOGRAM = 2;
     
     private RenderLogicHolder() {
         renderLogics = new RenderLogic[COUNT];
         
         renderLogics[RL_BYTEMAP] = new Bytemap();
+        renderLogics[RL_DIGRAPH] = new Digraph();
+        renderLogics[RL_FREQ_HISTOGRAM] = new FrequencyHistogram();
     }
     
     public RenderLogic get(int index) {

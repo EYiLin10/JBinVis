@@ -15,6 +15,8 @@ import jbinvis.frontend.settingspanel.BytemapSettingsPanel;
 import jbinvis.frontend.settingspanel.SettingsToLogicInterface;
 import jbinvis.main.JBinVis;
 import jbinvis.math.Hilbert;
+import jbinvis.math.ShannonEntropy;
+import jbinvis.renderer.BinVisCanvas;
 import jbinvis.renderer.CanvasShader;
 import jbinvis.renderer.CanvasTexture;
 import jbinvis.renderer.RenderLogic;
@@ -43,12 +45,15 @@ public class Bytemap extends RenderLogic implements jbinvis.main.FileUpdateListe
     private int scanWidth = 512;
     private int pixelSize = 1;
     private int colourScheme = 0;
+    private int windowSize = 32;
 
     private int uniformPixelSize = -1;
 
+    private final ShannonEntropy entropy;
+    
     public Bytemap() {
         jbinvis = JBinVis.getInstance();
-        jbinvis.addFileUpdateListener(this);
+        entropy = new ShannonEntropy();
     }
 
     @Override
@@ -144,8 +149,11 @@ public class Bytemap extends RenderLogic implements jbinvis.main.FileUpdateListe
             return;
         }
 
-        if(fillerFunction == 1) colorTextureHilbert();
-        else colorTextureScanline();
+        if (fillerFunction == 1) {
+            colorTextureHilbert();
+        } else {
+            colorTextureScanline();
+        }
     }
 
     private void colorTextureHilbert() {
@@ -159,17 +167,50 @@ public class Bytemap extends RenderLogic implements jbinvis.main.FileUpdateListe
         switch (pixelFormat) {
             case 0: // 8bpp
 
-                for (int i = 0; i < PIXEL_COUNT; i++) {
-                    transformed = Hilbert.xy(i);
-                    value[0] = isEOF ? 0 : file.read(offset + i);
+                if(colourScheme!=2) {
+                    for (int i = 0; i < PIXEL_COUNT; i++) {
+                        transformed = Hilbert.xy(i);
+                        value[0] = isEOF ? 0 : file.read(offset + i);
 
-                    if (value[0] < 0) {
-                        value[0] = 0;
-                        isEOF = true;
+                        if (value[0] < 0) {
+                            value[0] = 0;
+                            isEOF = true;
+                        }
+                        texture.setPixel(transformed & 0x1FF, transformed >> 9, convertToColour(value[0]));
                     }
-                    texture.setPixel(transformed & 0x1FF, transformed >> 9, 0, value[0], 0);
                 }
+                else {
+                    // entropy
+                    // clear the calculator
+                    entropy.clear();
+                    entropy.setWindowSize(windowSize);
+                    
+                    double sum = 0;
+                    int w2 = windowSize/2;
+                    
+                    // prepare window
+                    for(int i=-w2-1;i<w2-1;i++) {
+                        value[0] = file.read(offset + i);
+                        if(value[0]>=0)
+                            entropy.addItem(value[0]);
+                        
+                    }
+                    
+                    for (int i = 0; i < PIXEL_COUNT; i++) {
+                        transformed = Hilbert.xy(i);
+                        
+                        value[0] = file.read(offset+i+w2-1);
+                        if(value[0]<0)
+                            entropy.removeItem();
+                        else
+                            entropy.addItem(value[0]);
 
+                        sum = entropy.calculateEntropy() ;
+                        value[0] = (int) sum;
+                        texture.setPixel(transformed & 0x1FF, transformed >> 9, 0, value[0], 0);
+                    }
+                }
+                
                 break;
 
             case 1: // 24 bpp RGB
@@ -223,6 +264,23 @@ public class Bytemap extends RenderLogic implements jbinvis.main.FileUpdateListe
         }
     }
 
+    private int convertToColour(int value) {
+        if(colourScheme == 0) 
+            return value<<8;
+        else {
+            if(value >= 'a' && value <= 'z' || value >= 'A' && value <= 'Z') {
+                return 0x69FF65;
+            }
+            else if(value >= '0' && value <='9') {
+                return 0xFF0000;
+            }
+            else {
+                value >>= 1;
+                return value | (value << 8) | (value<<16);
+            }
+        }
+    }
+    
     private void colorTextureScanline() {
         long offset = jbinvis.getFileOffset();
         int[] value = new int[4];
@@ -231,24 +289,67 @@ public class Bytemap extends RenderLogic implements jbinvis.main.FileUpdateListe
 
         FileCache file = jbinvis.getFile();
 
-        int pxCount = scanWidth * 512;
         int tx, ty;
-
+        
         switch (pixelFormat) {
             case 0: // 8bpp
-                for (int i = 0; i < PIXEL_COUNT; i++) {
-                    tx = i & 0x1FF;
-                    ty = i >> 9;
-                    if ((i & 0x1FF) >= scanWidth) {
-                        texture.setPixel(tx, ty, 0, 0, 0);
-                    } else {
-                        value[0] = isEOF ? 0 : file.read(offset++);
+                if (colourScheme != 2) {
+                    // greyscale and character class
+                    for (int i = 0; i < PIXEL_COUNT; i++) {
+                        tx = i & 0x1FF;
+                        ty = i >> 9;
+                        if (tx >= scanWidth) {
+                            texture.setPixel(tx, ty, 0, 0, 0);
+                        } else {
+                            value[0] = isEOF ? 0 : file.read(offset++);
 
-                        if (value[0] < 0) {
-                            value[0] = 0;
-                            isEOF = true;
+                            if (value[0] < 0) {
+                                value[0] = 0;
+                                isEOF = true;
+                            }
+                            texture.setPixel(tx, ty, convertToColour(value[0]));
                         }
-                        texture.setPixel(tx, ty, 0, value[0], 0);
+                    }
+                } else {
+                    // entropy
+                    // clear the calculator
+                    entropy.clear();
+                    entropy.setWindowSize(windowSize);
+                    
+                    double sum = 0;
+                    int w2 = windowSize/2;
+                    
+                    // prepare window
+                    for(int i=-w2-1;i<w2-1;i++) {
+                        value[0] = file.read(offset + i);
+                        if(value[0]>=0)
+                            entropy.addItem(value[0]);
+                        
+                    }
+                    
+                    for (int i = 0; i < PIXEL_COUNT; i++) {
+                        tx = i & 0x1FF;
+                        ty = i >> 9;
+                        
+                        if(ty >256) {
+                            sum = 0;
+                        }
+                        
+                        if (tx >= scanWidth) {
+                            texture.setPixel(tx, ty, 0, 0, 0);
+                        } else {
+                            value[0] = file.read(offset+w2-1);
+                            if(value[0]<0)
+                                entropy.removeItem();
+                            else
+                                entropy.addItem(value[0]);
+
+                            sum = entropy.calculateEntropy() ;
+                            value[0] = (int) sum;
+                            texture.setPixel(tx, ty, 0, value[0], 0);
+                            
+                            offset++;
+                        }
                     }
                 }
 
@@ -258,7 +359,7 @@ public class Bytemap extends RenderLogic implements jbinvis.main.FileUpdateListe
                 for (int i = 0; i < PIXEL_COUNT; i++) {
                     tx = i & 0x1FF;
                     ty = i >> 9;
-                    if ((i & 0x1FF) >= scanWidth) {
+                    if (tx >= scanWidth) {
                         texture.setPixel(tx, ty, 0, 0, 0);
                     } else {
                         if (isEOF) {
@@ -268,9 +369,9 @@ public class Bytemap extends RenderLogic implements jbinvis.main.FileUpdateListe
                             isEOF = true;
                         } else {
                             value[0] = file.read(offset);
-                            value[1] = file.read(offset+1);
-                            value[2] = file.read(offset+2);
-                            offset+=3;
+                            value[1] = file.read(offset + 1);
+                            value[2] = file.read(offset + 2);
+                            offset += 3;
                         }
                         texture.setPixel(tx, ty, value[0], value[1], value[2]);
                     }
@@ -282,7 +383,7 @@ public class Bytemap extends RenderLogic implements jbinvis.main.FileUpdateListe
                 for (int i = 0; i < PIXEL_COUNT; i++) {
                     tx = i & 0x1FF;
                     ty = i >> 9;
-                    if ((i & 0x1FF) >= scanWidth) {
+                    if (tx >= scanWidth) {
                         texture.setPixel(tx, ty, 0, 0, 0);
                     } else {
                         if (isEOF) {
@@ -292,10 +393,10 @@ public class Bytemap extends RenderLogic implements jbinvis.main.FileUpdateListe
                             isEOF = true;
                         } else {
                             value[0] = file.read(offset);
-                            value[1] = file.read(offset+1);
-                            value[2] = file.read(offset+2);
-                            value[3] = file.read(offset+3);
-                            offset+=4;
+                            value[1] = file.read(offset + 1);
+                            value[2] = file.read(offset + 2);
+                            value[3] = file.read(offset + 3);
+                            offset += 4;
                         }
 
                         if (pixelFormat == 2) {
@@ -317,6 +418,7 @@ public class Bytemap extends RenderLogic implements jbinvis.main.FileUpdateListe
                 break;
         }
     }
+
 
     @Override
     public String getName() {
@@ -421,7 +523,7 @@ public class Bytemap extends RenderLogic implements jbinvis.main.FileUpdateListe
     public void keyReleased(KeyEvent e) {
         if (e.getSource() == settingsPanel.getSpinnerPixelSize()
                 || e.getSource() == settingsPanel.getSpinnerScanwidth()) {
-            
+
             ChangeEvent ev = new ChangeEvent(e.getSource());
             stateChanged(ev);
         }
@@ -450,5 +552,18 @@ public class Bytemap extends RenderLogic implements jbinvis.main.FileUpdateListe
         }
         return (x == 1);
     }
+
+    @Override
+    public void onAttachToCanvas(BinVisCanvas canvas) {
+        jbinvis.addFileUpdateListener(this);
+        colorTexture();
+    }
+
+    @Override
+    public void onUnattachFromCanvas(BinVisCanvas canvas) {
+        jbinvis.removeFileUpdateListener(this);
+    }
+    
+    
 
 }

@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import jbinvis.main.JBinVis;
 
 /**
  * Every visualisation will extend this class. This interface represents
@@ -102,6 +103,18 @@ public abstract class RenderLogic implements MouseWheelListener, KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
     }
+    
+    /**
+     * Fired when this logic is set as the current logic
+     * @param canvas 
+     */
+    public void onAttachToCanvas(BinVisCanvas canvas) {
+    }
 
-
+     /**
+     * Fired when this logic is unset/replaced as the current logic
+     * @param canvas 
+     */
+    public void onUnattachFromCanvas(BinVisCanvas canvas) {
+    }
 }

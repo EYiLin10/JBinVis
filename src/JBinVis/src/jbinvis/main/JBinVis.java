@@ -131,7 +131,8 @@ public class JBinVis {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {        
+    public static void main(String[] args) {   
+
         // create singleton instance
         _singleton = new JBinVis();
         
@@ -141,6 +142,7 @@ public class JBinVis {
         MainFrame frame = new MainFrame();
         frame.setTitle("JBinVis");
         frame.setVisible(true);
+
     }
     
 }

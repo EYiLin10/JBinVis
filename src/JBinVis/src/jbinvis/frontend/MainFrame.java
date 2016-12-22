@@ -21,13 +21,12 @@ import jbinvis.visualisations.Bytemap;
  * @author Billy
  */
 public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
-        ChangeListener
-    {
-    
+        ChangeListener {
+
     private BinVisCanvas canvas = null;
     private final JBinVis jbinvis;
     private BytemapSettingsPanel bytemapConfigPanel;
-    
+
     /**
      * Creates new form MainFrame
      */
@@ -35,23 +34,23 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
         initComponents();
         jbinvis = JBinVis.getInstance();
         jbinvis.addFileUpdateListener(this);
-        
+
         canvas = BinVisCanvas.create(panelCanvas);
 
         menuCloseFile.setEnabled(false);
 
         textOffset.setEnabled(false);
         sliderOffset.setEnabled(false);
-        
+
         sliderOffset.addChangeListener(this);
-        
+
         // initialise config panels
         bytemapConfigPanel = new BytemapSettingsPanel();
-        ((Bytemap)RenderLogicHolder.fromId(RenderLogicHolder.RL_BYTEMAP)).attachPanel(bytemapConfigPanel);
-        
+        ((Bytemap) RenderLogicHolder.fromId(RenderLogicHolder.RL_BYTEMAP)).attachPanel(bytemapConfigPanel);
+
         // default to bytemap in the beginning
         switchVisualisation(RenderLogicHolder.RL_BYTEMAP);
-        
+
     }
 
     /**
@@ -82,6 +81,8 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
         menuClose = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         menuBytemap = new javax.swing.JMenuItem();
+        menuDigraph = new javax.swing.JMenuItem();
+        menuFreqHistogram = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(640, 640));
@@ -210,6 +211,22 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
         });
         jMenu2.add(menuBytemap);
 
+        menuDigraph.setText("Digraph");
+        menuDigraph.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuDigraphActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menuDigraph);
+
+        menuFreqHistogram.setText("Frequency Histogram");
+        menuFreqHistogram.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuFreqHistogramActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menuFreqHistogram);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -225,11 +242,11 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
         // prompt user for file
         final JFileChooser fc = new JFileChooser();
         int retval = fc.showOpenDialog(this);
-        
-        if(retval == JFileChooser.APPROVE_OPTION) {
+
+        if (retval == JFileChooser.APPROVE_OPTION) {
             jbinvis.loadFile(fc.getSelectedFile().getAbsolutePath());
             menuCloseFile.setEnabled(true);
-        } 
+        }
     }//GEN-LAST:event_menuOpenFileActionPerformed
 
     private void menuCloseFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCloseFileActionPerformed
@@ -243,19 +260,18 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
 
     private boolean updateOffsetFromText = false;
     private void textOffsetFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textOffsetFocusLost
-        if(updateOffsetFromText) {
+        if (updateOffsetFromText) {
             // validate the value of text box
             String value = textOffset.getText();
-            
+
             long offset = 0;
             try {
                 offset = Long.parseLong(value);
                 jbinvis.setFileOffset(offset);
-            }
-            catch(NumberFormatException e) {
+            } catch (NumberFormatException e) {
                 MsgBox("Offset value is incorrectly formatted", "Error");
             }
-            
+
             textOffset.setText(Long.toString(jbinvis.getFileOffset()));
             updateOffsetFromText = false;
         }
@@ -263,17 +279,23 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
 
     private void textOffsetKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textOffsetKeyPressed
         // blur this component upon pressing escape or enter
-        if(evt.getKeyCode() == KeyEvent.VK_ESCAPE) 
-        {
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             updateOffsetFromText = false;
             textOffset.setText(Long.toString(jbinvis.getFileOffset()));
             this.requestFocus();
-        }
-        else if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        } else if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             updateOffsetFromText = true;
             this.requestFocus();
         }
     }//GEN-LAST:event_textOffsetKeyPressed
+
+    private void menuDigraphActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDigraphActionPerformed
+        switchVisualisation(RenderLogicHolder.RL_DIGRAPH);
+    }//GEN-LAST:event_menuDigraphActionPerformed
+
+    private void menuFreqHistogramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuFreqHistogramActionPerformed
+        switchVisualisation(RenderLogicHolder.RL_FREQ_HISTOGRAM);
+    }//GEN-LAST:event_menuFreqHistogramActionPerformed
 
     /**
      * @param args the command line arguments
@@ -323,6 +345,8 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
     private javax.swing.JMenuItem menuBytemap;
     private javax.swing.JMenuItem menuClose;
     private javax.swing.JMenuItem menuCloseFile;
+    private javax.swing.JMenuItem menuDigraph;
+    private javax.swing.JMenuItem menuFreqHistogram;
     private javax.swing.JMenuItem menuOpenFile;
     private javax.swing.JPanel panelCanvas;
     private javax.swing.JPanel panelConfigPane;
@@ -334,36 +358,36 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
 
     // to prevent mutual recursion
     private boolean ignoreStateChanged = false, ignoreOffsetUpdated = false;
-    
+
     @Override
     public void stateChanged(ChangeEvent e) {
-        
-        if(e.getSource() == sliderOffset) {
-            if(!jbinvis.isLoaded())
+
+        if (e.getSource() == sliderOffset) {
+            if (!jbinvis.isLoaded()) {
                 return;
-            
-            if(ignoreStateChanged)
+            }
+
+            if (ignoreStateChanged) {
                 ignoreStateChanged = false;
-            else {
-                double percentage = (double)sliderOffset.getValue() / sliderOffset.getMaximum();
+            } else {
+                double percentage = (double) sliderOffset.getValue() / sliderOffset.getMaximum();
                 ignoreOffsetUpdated = true;
-                jbinvis.setFileOffset((int)(percentage * jbinvis.getFileSize()));
+                jbinvis.setFileOffset((int) (percentage * jbinvis.getFileSize()));
             }
         }
     }
 
-    
     @Override
     public void fileOffsetUpdated() {
         textOffset.setText(Long.toString(jbinvis.getFileOffset()));
 
-        if(ignoreOffsetUpdated)
+        if (ignoreOffsetUpdated) {
             ignoreOffsetUpdated = false;
-        else {
+        } else {
             // update slider
-            double percentage = (double)jbinvis.getFileOffset() / jbinvis.getFileSize();
+            double percentage = (double) jbinvis.getFileOffset() / jbinvis.getFileSize();
             ignoreStateChanged = true;
-            sliderOffset.setValue((int)(percentage * sliderOffset.getMaximum()));
+            sliderOffset.setValue((int) (percentage * sliderOffset.getMaximum()));
         }
     }
 
@@ -372,7 +396,7 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
         sliderOffset.setEnabled(false);
         textOffset.setEnabled(false);
         labelFileSize.setText("");
-        
+
         setSettingsPanelEnabled(false);
     }
 
@@ -380,62 +404,73 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
     public void fileOpened() {
         sliderOffset.setEnabled(true);
         textOffset.setEnabled(true);
-        
+
         textOffset.setText("0");
         labelFileSize.setText(Long.toString(jbinvis.getFileSize()));
-        
+
         setSettingsPanelEnabled(true);
     }
 
-    
     /**
      * Helper method to show dialog message box
      */
     private void MsgBox(String msg, String title) {
         JOptionPane.showMessageDialog(this, msg, title, JOptionPane.INFORMATION_MESSAGE);
     }
-    
+
     /**
      * Helper method to switch visualisations
-     * @param index Index of visualisation defined by the RL_* constants in RenderLogicHolder
+     *
+     * @param index Index of visualisation defined by the RL_* constants in
+     * RenderLogicHolder
      */
     private void switchVisualisation(int index) {
         panelConfigPane.removeAll();
-        
-        switch(index) {
+
+        switch (index) {
             case RenderLogicHolder.RL_BYTEMAP:
-                this.panelConfigPane.add(bytemapConfigPanel, BorderLayout.CENTER);       
-                this.canvas.setRenderLogic(RenderLogicHolder.getInstance().get(RenderLogicHolder.RL_BYTEMAP));
+                this.panelConfigPane.add(bytemapConfigPanel, BorderLayout.CENTER);
                 break;
         }
-        
+
         panelConfigPane.validate();
-        
-        // settings panel should not be enabled if there is no file opened
-        setSettingsPanelEnabled(jbinvis.isLoaded());
-        
+        panelConfigPane.repaint();
+
+        if (index < 0 || index > RenderLogicHolder.getInstance().COUNT) {
+            this.canvas.setRenderLogic(null);
+        } else {
+            this.canvas.setRenderLogic(RenderLogicHolder.getInstance().get(index));
+
+            // settings panel should not be enabled if there is no file opened
+            setSettingsPanelEnabled(jbinvis.isLoaded());
+
+        }
+
         // display the visualisation name
-        if(canvas.getRenderLogic()!=null)
+        if (canvas.getRenderLogic() != null) {
             labelVisualisationName.setText(canvas.getRenderLogic().getName());
-        else
+        } else {
             labelVisualisationName.setText("");
+        }
     }
-    
+
     /**
      * Helper function to enable or disable the settings pane
      */
     private void setSettingsPanelEnabled(boolean enabled) {
-        Component obj = panelConfigPane.getComponent(0);
-        if(obj instanceof QuickEnable) {
-            if(enabled)
-                ((QuickEnable)obj).enableAll();
-            else
-                ((QuickEnable)obj).disableAll();
+        if (panelConfigPane.getComponentCount() > 0) {
+            Component obj = panelConfigPane.getComponent(0);
+            if (obj instanceof QuickEnable) {
+                if (enabled) {
+                    ((QuickEnable) obj).enableAll();
+                } else {
+                    ((QuickEnable) obj).disableAll();
+                }
+            } else {
+                System.out.println("Warning: Settings panel " + obj.getClass().getName()
+                        + " does not implement QuickEnable.");
+            }
         }
-        else
-            System.out.println("Warning: Settings panel " + obj.getClass().getName() + 
-                    " does not implement QuickEnable.");
     }
 
- 
 }
