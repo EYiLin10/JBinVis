@@ -22,47 +22,50 @@ import java.util.PriorityQueue;
 import jbinvis.main.JBinVis;
 
 /**
- * Encapsulates the canvas onto which all visualisations will be drawn. 
- * This exposes the underlying OpenGL functions needed for rendering purposes.
+ * Encapsulates the canvas onto which all visualisations will be drawn. This
+ * exposes the underlying OpenGL functions needed for rendering purposes.
+ *
  * @author Billy
  */
 public class BinVisCanvas extends GLCanvas implements GLEventListener, MouseWheelListener, KeyListener {
-    private static final Dimension minimumSize = new Dimension(2,2);
-    
+
+    private static final Dimension minimumSize = new Dimension(2, 2);
+
     // keep a history of render logic so they can all be disposed
     private HashSet<RenderLogic> renderLogics = new HashSet();
     private int nextId = 1000;
     private PriorityQueue<RenderLogic> initQueue = new PriorityQueue();
     private PriorityQueue<RenderLogic> resizeQueue = new PriorityQueue();
-    
+
     private RenderLogic renderLogic = null;
     private long lastCallTime = 0;
-    
+
     private final JBinVis jbinvis;
-    
+
     private FPSAnimator animator;
-    
+
     private BinVisCanvas(Container parent, GLCapabilities caps) {
         super(caps);
         parent.add(this);
-        
+
         // add event listeners
         this.addGLEventListener(this);
-        
+
         this.addMouseWheelListener(this);
         this.addKeyListener(this);
-        
+
         lastCallTime = System.currentTimeMillis();
-        
+
         // this will call the display function at 30 fps
         this.animator = new FPSAnimator(this, 30, true);
         this.animator.start();
-        
+
         jbinvis = JBinVis.getInstance();
     }
-    
+
     /**
      * Creates an instance of the canvas and add to the specified container
+     *
      * @param parent The container to add this canvas into
      * @return The instantiated canvas
      */
@@ -72,29 +75,29 @@ public class BinVisCanvas extends GLCanvas implements GLEventListener, MouseWhee
         BinVisCanvas canvas = new BinVisCanvas(parent, glcaps);
         return canvas;
     }
-    
+
     public void setRenderLogic(RenderLogic render) {
-        if(render._getId() < 0) {
+        if (render._getId() < 0) {
             // this render logic is being set here the first time
             render._setId(nextId++);
             renderLogics.add(render);
-            
+
             // queue for init
             initQueue.add(render);
         }
         // signal unattach
-        if(this.renderLogic != null) {
+        if (this.renderLogic != null) {
             this.renderLogic.onUnattachFromCanvas(this);
         }
-        
+
         this.renderLogic = render;
-        
+
         // queue for resize
         resizeQueue.add(render);
-        
+
         this.renderLogic.onAttachToCanvas(this);
     }
-    
+
     public RenderLogic getRenderLogic() {
         return this.renderLogic;
     }
@@ -102,7 +105,7 @@ public class BinVisCanvas extends GLCanvas implements GLEventListener, MouseWhee
     @Override
     public void init(GLAutoDrawable drawable) {
         final GL2 gl = drawable.getGL().getGL2();
-        
+
         gl.glDisable(GL2.GL_LIGHTING);
         gl.glEnable(GL2.GL_TEXTURE_2D);
     }
@@ -110,13 +113,14 @@ public class BinVisCanvas extends GLCanvas implements GLEventListener, MouseWhee
     @Override
     public void dispose(GLAutoDrawable drawable) {
         final GL2 gl = drawable.getGL().getGL2();
-        
-        if(this.animator.isStarted())
+
+        if (this.animator.isStarted()) {
             animator.stop();
-        
+        }
+
         // call dispose on all render logics that were used here
-        for(RenderLogic logic: renderLogics) {
-            if(!logic.isDisposed()) {
+        for (RenderLogic logic : renderLogics) {
+            if (!logic.isDisposed()) {
                 logic.dispose(gl);
             }
         }
@@ -128,65 +132,67 @@ public class BinVisCanvas extends GLCanvas implements GLEventListener, MouseWhee
     public void display(GLAutoDrawable drawable) {
         double delta = 0;
         final GL2 gl = drawable.getGL().getGL2();
-        
+
         // check init queue
-        if(!initQueue.isEmpty()) {
+        if (!initQueue.isEmpty()) {
             RenderLogic q = initQueue.remove();
             q.init(gl);
         }
-        
-        if(!resizeQueue.isEmpty()) {
-            int[] dims = {0,0,0,0};
+
+        if (!resizeQueue.isEmpty()) {
+            int[] dims = {0, 0, 0, 0};
             RenderLogic q = resizeQueue.remove();
             gl.glGetIntegerv(GL2.GL_VIEWPORT, dims, 0);
             q.resize(dims[2], dims[3]);
         }
-        
+
         // calculate delta
         long curTime = System.currentTimeMillis();
         delta = (curTime - lastCallTime) / 1000.0;
         lastCallTime = curTime;
-        
+
         // update and rendering
-        if(renderLogic!=null && !renderLogic.isDisposed()) {
-            renderLogic.update(gl,delta);
+        if (renderLogic != null && !renderLogic.isDisposed()) {
+            renderLogic.update(gl, delta);
             renderLogic.render(gl, delta);
-        }
-        else {
-            gl.glClearColor(0,0,0,0);
+        } else {
+            gl.glClearColor(0, 0, 0, 0);
             gl.glClear(GL2.GL_COLOR_BUFFER_BIT);
         }
-        
+
         gl.glFlush();
     }
-    
+
     @Override
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
         final GL2 gl = drawable.getGL().getGL2();
-        gl.glViewport(x,y,width,height);
+        gl.glViewport(x, y, width, height);
 
         this.setMinimumSize(minimumSize);
-        
-        if(renderLogic != null)
+
+        if (renderLogic != null) {
             renderLogic.resize(width, height);
+        }
     }
 
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
-        if(renderLogic!=null)
+        if (renderLogic != null) {
             this.renderLogic.mouseWheelMoved(e);
-        
+        }
+
         int multiplier;
-        if(e.getScrollType() == MouseWheelEvent.WHEEL_UNIT_SCROLL)
+        if (e.getScrollType() == MouseWheelEvent.WHEEL_UNIT_SCROLL) {
             multiplier = e.getUnitsToScroll();
-        else 
+        } else {
             multiplier = e.getWheelRotation();
-        
+        }
+
         // move the offset
-        if(jbinvis.isLoaded()) {
+        if (jbinvis.isLoaded()) {
             long offset = jbinvis.getFileOffset();
             long increment = 16 * multiplier;
-            
+
             jbinvis.setFileOffset(offset + increment);
         }
     }
@@ -199,20 +205,31 @@ public class BinVisCanvas extends GLCanvas implements GLEventListener, MouseWhee
     public void keyPressed(KeyEvent e) {
         long offset = jbinvis.getFileOffset();
         long increment = 32;
-  
-        switch(e.getKeyCode()) {
+
+        switch (e.getKeyCode()) {
             case KeyEvent.VK_DOWN:
                 jbinvis.setFileOffset(offset + increment);
                 break;
-                
+
             case KeyEvent.VK_UP:
                 jbinvis.setFileOffset(offset - increment);
                 break;
+
+            default:
+                // pass over event
+                if (renderLogic != null) {
+                    renderLogic.keyPressed(e);
+                }
+                break;
         }
+
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-
+        // pass over event
+        if (this.renderLogic != null) {
+            this.renderLogic.keyReleased(e);
+        }
     }
 }

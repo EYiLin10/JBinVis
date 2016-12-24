@@ -67,6 +67,14 @@ public class CanvasTexture {
         setPixel(x,y, (clrRGB & 0xFF0000) >> 16, (clrRGB & 0xFF00) >> 8, clrRGB & 0xFF);
     }
     
+    public int getPixel(int x, int y) {
+        if(x<0 || x>=width || y<0 || y>=height)
+            throw new IndexOutOfBoundsException("x and y values should be within dimensions");
+        
+        int offset = 3*(y*width + x);
+        return (pixels[offset]<<16)&0xFF000 | (pixels[offset+1]<<8)&0xFF00 | pixels[offset+2]&0xFF;
+    }
+    
     /**
      * When the pixel buffer is modified, call this to update the buffer in 
      * GPU
