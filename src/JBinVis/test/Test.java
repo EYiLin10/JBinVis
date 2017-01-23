@@ -89,7 +89,7 @@ public class Test {
 
         @Override
         public void init(GL2 gl) {
-            tex = new CanvasTexture(gl, 4, 4);
+            tex = CanvasTexture.create2D(gl, 4, 4);
             byte a = (byte) 0xff;
 
             tex.setPixel(0, 0, a, a, a);

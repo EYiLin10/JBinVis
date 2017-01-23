@@ -1,6 +1,7 @@
 package jbinvis.visualisations;
 
 import com.jogamp.opengl.GL2;
+import java.util.HashMap;
 import jbinvis.backend.FileCache;
 import jbinvis.main.FileUpdateListener;
 import jbinvis.main.JBinVis;
@@ -17,29 +18,39 @@ import jbinvis.renderer.camera.OrthographicCamera;
 public class Digraph extends RenderLogic implements FileUpdateListener {
     private JBinVis jbinvis;
     
+    private CanvasTexture contrastTex = null;
     private CanvasTexture texture = null;
     private CanvasShader shader = null;
     private OrthographicCamera camera = null;
     
-    private int uniformMax;
-    private int maxFreq = 1;
+    private int uniformSamplerContrast;
+    private int uniformSamplerTexture;
+    
     
     private int[] histogram = null;
-    private int windowSize = 8192;
+    private int[] grayCount = null;
+    private float[] pdf = null;
+    
+    private int windowSize = 16384;
     
     private int halfQuadSize=256, centerX=256, centerY=256;
+
     
     public Digraph() {
         jbinvis = JBinVis.getInstance();
+        pdf = new float[256];
     }
 
     @Override
     public void init(GL2 gl) {
         camera = new OrthographicCamera(gl);
-        texture = new CanvasTexture(gl, 256,256);
+        texture = CanvasTexture.create2D(gl, 256, 256);
+        contrastTex = CanvasTexture.create1D(gl, 256, 1);
         shader = new CanvasShader(gl, "digraph");
         
-        uniformMax = shader.getUniformLocation(gl, "u_max");
+        uniformSamplerTexture = shader.getUniformLocation(gl, "u_texture");
+        uniformSamplerContrast = shader.getUniformLocation(gl, "u_contrast");
+        contrastTex.setUniformSampler(gl, uniformSamplerContrast);
         
         colorTexture();
     }
@@ -59,6 +70,7 @@ public class Digraph extends RenderLogic implements FileUpdateListener {
     public void dispose(GL2 gl) {
         jbinvis.removeFileUpdateListener(this);
         texture.dispose(gl);
+        contrastTex.dispose(gl);
         shader.dispose(gl);
     }
 
@@ -69,10 +81,12 @@ public class Digraph extends RenderLogic implements FileUpdateListener {
         
         camera.update(gl);
         texture.bind(gl);
-        shader.begin(gl);
+        contrastTex.bind(gl);
         
-        // provide the maximum frequency
-        gl.glUniform1f(uniformMax, (float)maxFreq);
+
+        shader.begin(gl);
+        texture.setUniformSampler(gl, uniformSamplerTexture);
+        contrastTex.setUniformSampler(gl, uniformSamplerContrast);
         
         gl.glBegin(GL2.GL_TRIANGLE_STRIP);
         
@@ -100,9 +114,16 @@ public class Digraph extends RenderLogic implements FileUpdateListener {
         if(texture == null)
             return;
         
+        int wsm1 = windowSize - 1;
+        int histSize = 256*256-1;
+        int grayLevel;
+        
         histogram = null;
-        histogram = new int[256*256];
-        maxFreq = 1;
+        histogram = new int[histSize+1];
+        
+        grayCount = null;
+        grayCount = new int[256];
+        
         
         int hisIndex = 0;
         int[] value = {0,0};
@@ -120,11 +141,33 @@ public class Digraph extends RenderLogic implements FileUpdateListener {
                 break;
             
             hisIndex = value[0]*256 + value[1];
-            histogram[hisIndex]++;
-            if(histogram[hisIndex] > maxFreq)
-                maxFreq = histogram[hisIndex];
+            histogram[hisIndex]++;   
             
-            texture.setPixel(value[0], value[1], histogram[hisIndex]);
+            //texture.setPixel(value[1], value[0], 0xFF00);
+        }
+        
+        computeContrast();
+    }
+    
+    private void computeContrast() {
+        int[] intensity = new int[windowSize];
+        for(int i=0;i<256*256;i++) {
+            intensity[histogram[i]]++;
+        }
+        int[] H = new int[windowSize];
+        float runningSum = 0;
+        
+        for(int i=0;i<windowSize;i++) {
+            runningSum += intensity[i] / 256.0f / 256.0f;
+            H[i] = (int)(runningSum * 255);
+        }
+        
+        int range = 255 - H[0];
+        if(range == 0) range = 1;
+        int clr;
+        for(int i=0;i<256*256;i++) {
+            clr = histogram[i];
+            texture.setPixel(i%256, i/256, ((H[clr] - H[0]) * 255 / range)<<8);
         }
     }
 
@@ -158,6 +201,7 @@ public class Digraph extends RenderLogic implements FileUpdateListener {
     @Override
     public void onUnattachFromCanvas(BinVisCanvas canvas) {
         histogram = null;
+        grayCount = null;
         jbinvis.removeFileUpdateListener(this);
         System.gc();
     }

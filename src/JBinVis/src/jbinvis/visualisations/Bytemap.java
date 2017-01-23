@@ -8,8 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseWheelEvent;
-import java.io.BufferedOutputStream;
 import javax.swing.JComboBox;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -62,7 +60,7 @@ public class Bytemap extends RenderLogic implements jbinvis.main.FileUpdateListe
     @Override
     public void init(GL2 gl) {
         camera = new OrthographicCamera(gl);
-        texture = new CanvasTexture(gl, 512, 512);
+        texture = CanvasTexture.create2D(gl, 512, 512);
         shader = new CanvasShader(gl, "texturePassThru");
 
         uniformPixelSize = shader.getUniformLocation(gl, "u_pixelSize");

@@ -126,6 +126,7 @@ public class CanvasShader {
             return;
         }
         
+        /*
         gl.glValidateProgram(shaderprog);
         gl.glGetProgramiv(shaderprog, GL2.GL_VALIDATE_STATUS, params, 0);
         if(params[0] == GL2.GL_FALSE) {
@@ -133,6 +134,7 @@ public class CanvasShader {
             dispose(gl);
             return;
         }
+        */
         
         initialised = true; 
     }
@@ -184,7 +186,7 @@ public class CanvasShader {
         StringBuilder builder = new StringBuilder();
         
         for(int i=0;i<length[0];i++) {
-            builder.append(data[i]);
+            builder.append((char)data[i]);
         }
         System.out.println("Shader Program Info Log: " + builder.toString());
     }
@@ -196,7 +198,7 @@ public class CanvasShader {
         StringBuilder builder = new StringBuilder();
         
         for(int i=0;i<length[0];i++) {
-            builder.append(data[i]);
+            builder.append((char)data[i]);
         }
         System.out.println("Shader Info Log: " + builder.toString());
     }
