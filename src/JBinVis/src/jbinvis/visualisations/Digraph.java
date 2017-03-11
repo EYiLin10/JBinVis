@@ -31,7 +31,7 @@ public class Digraph extends RenderLogic implements FileUpdateListener {
     private int[] grayCount = null;
     private float[] pdf = null;
     
-    private int windowSize = 16384;
+    private int windowSize = 8192;
     
     private int halfQuadSize=256, centerX=256, centerY=256;
 
@@ -114,9 +114,7 @@ public class Digraph extends RenderLogic implements FileUpdateListener {
         if(texture == null)
             return;
         
-        int wsm1 = windowSize - 1;
         int histSize = 256*256-1;
-        int grayLevel;
         
         histogram = null;
         histogram = new int[histSize+1];
@@ -151,6 +149,8 @@ public class Digraph extends RenderLogic implements FileUpdateListener {
     
     private void computeContrast() {
         int[] intensity = new int[windowSize];
+        
+        // intensity is a frequency histogram of digraph count
         for(int i=0;i<256*256;i++) {
             intensity[histogram[i]]++;
         }

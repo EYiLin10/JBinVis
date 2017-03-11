@@ -270,9 +270,11 @@ public class Bytemap extends RenderLogic implements jbinvis.main.FileUpdateListe
         if (colourScheme == 0) {
             return value << 8;
         } else if (value >= 'a' && value <= 'z' || value >= 'A' && value <= 'Z') {
-            return 0x69FF65;
+            return 0xDAF7A6;
         } else if (value >= '0' && value <= '9') {
-            return 0xFF0000;
+            return 0xFF5733;
+        } else if (value >= 0x20 && value <=0x7E ) {
+            return 0x85C1E9;
         } else {
             value >>= 1;
             return value | (value << 8) | (value << 16);
