@@ -20,3 +20,6 @@ File fragment encoding classification -- An empirical approach - Roussev, Quates
 *** Centroid == average of the vector set (fileprint) for a file type
 *** If Distance( fileprint( file input), a centroid ) < threshold, then input file is very likely the
 		type of file whose centroid is used in calculation
+
+
+https://www.learnopencv.com/tag/image-classification/
