@@ -3,6 +3,7 @@
  */
 package webcrawler;
 
+import webcrawler.filter.SearchCriteria;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -47,8 +48,6 @@ public class CollectionBatcher {
         LinksCollector collector;
         while(!queuedQueries.isEmpty()) {
             SearchCriteria curQuery = queuedQueries.element();
-            
-            System.out.println("Query: " + curQuery);
             
             collector = new LinksCollector(curQuery, targetSearchCount);            
             try {

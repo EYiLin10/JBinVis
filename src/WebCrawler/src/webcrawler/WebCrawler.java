@@ -13,6 +13,10 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import webcrawler.CollectionBatcher;
+import webcrawler.filter.ImageSearchCriteria;
+import webcrawler.filter.SearchCriteria;
+import webcrawler.filter.SecondaryImageCrawl;
 
 /**
  *
@@ -23,23 +27,19 @@ public class WebCrawler {
     public WebCrawler() {
         
     }
-    
-    /**
-     * Scrapes search results for links to a particular file type
-     * @param fileType 
-     */
-    public void collectFileType(String fileType) {
-                
-    }
-    
-    
+
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException {
-       CollectionBatcher batcher = new CollectionBatcher(1000);
-       batcher.addQuery(new SearchCriteria.ImageSearchCriteria("dogs or cats or cows or chickens"));
-       batcher.addQuery(new SearchCriteria.DocumentSearchCriteria("dogs or cats or cows or chickens", "ppt"));
+       CollectionBatcher batcher = new CollectionBatcher(100);
+       batcher.addQuery(new ImageSearchCriteria("dogs or cats or cows or chickens", "png")
+               .setSecondaryCrawl(new SecondaryImageCrawl(500)));
+       batcher.addQuery(new ImageSearchCriteria("dogs or cats or cows or chickens", "jpg")
+               .setSecondaryCrawl(new SecondaryImageCrawl(500)));
+       batcher.addQuery(new ImageSearchCriteria("dogs or cats or cows or chickens", "bmp")
+               .setSecondaryCrawl(new SecondaryImageCrawl(500)));
+      // batcher.addQuery(new SearchCriteria.DocumentSearchCriteria("dogs or cats or cows or chickens", "ppt"));
        
        batcher.execute();
        

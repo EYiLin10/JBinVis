@@ -3,16 +3,16 @@
  */
 package webcrawler;
 
+import webcrawler.filter.LinkFilter;
+import webcrawler.filter.SearchCriteria;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Collection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+import webcrawler.filter.SecondaryCrawl;
 
 /**
  * Collects links that satisfy a particular search
@@ -43,6 +43,7 @@ public class LinksCollector {
     }
     
     public void start() throws IOException {
+        System.out.println("Started collecting links : " + criteria.toString());
         urls = new ArrayList<String>();
         int attempt = 0;
         String queryLink = criteria.getSearchString();
@@ -62,6 +63,14 @@ public class LinksCollector {
             if(queryLink == null)
                 break;
             currentPage++;
+        }
+        
+        SecondaryCrawl crawl = criteria.getSecondaryCrawl();
+        if(crawl!=null) {
+            // process the urls using secondary crawler
+            crawl.setLinks(urls);
+            ArrayList<String> results = crawl.execute();
+            urls = results;
         }
     }
     
