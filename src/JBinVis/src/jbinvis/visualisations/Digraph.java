@@ -167,7 +167,7 @@ public class Digraph extends RenderLogic implements FileUpdateListener {
         int clr;
         for(int i=0;i<256*256;i++) {
             clr = histogram[i];
-            texture.setPixel(i%256, i/256, ((H[clr] - H[0]) * 255 / range)<<8);
+            texture.setPixel(i%256, i/256, ((H[clr] - H[0]) * 255 / range)<<8 | 0xFF000000);
         }
     }
 
