@@ -25,17 +25,58 @@ public class WebCrawler {
     
     public WebCrawler() {
          CollectionBatcher batcher = new CollectionBatcher(100);
-       batcher.addQuery(new ImageSearchCriteria("dogs or cats or cows or chickens", "png")
-               .setSecondaryCrawl(new SecondaryImageCrawl(500)));
-       batcher.addQuery(new ImageSearchCriteria("dogs or cats or cows or chickens", "jpg")
-               .setSecondaryCrawl(new SecondaryImageCrawl(500)));
-       batcher.addQuery(new ImageSearchCriteria("dogs or cats or cows or chickens", "bmp")
-               .setSecondaryCrawl(new SecondaryImageCrawl(500)));
-      batcher.addQuery(new DocumentSearchCriteria("dogs or cats or cows or chickens", "ppt"));
-       batcher.addQuery(new DocumentSearchCriteria("dogs or cats or cows or chickens", "pdf"));
-       batcher.addQuery(new DocumentSearchCriteria("dogs or cats or cows or chickens", "doc"));
-       batcher.addQuery(new DocumentSearchCriteria("dogs or cats or cows or chickens", "xls"));
-       
+         SecondaryImageCrawl seccrawl = new SecondaryImageCrawl(500);
+         
+        batcher.addQuery(new ImageSearchCriteria("dogs", "png").setSecondaryCrawl(seccrawl));
+        batcher.addQuery(new ImageSearchCriteria("dogs", "gif").setSecondaryCrawl(seccrawl));
+        batcher.addQuery(new ImageSearchCriteria("dogs", "bmp").setSecondaryCrawl(seccrawl));
+        batcher.addQuery(new ImageSearchCriteria("dogs", "jpg").setSecondaryCrawl(seccrawl));
+        
+        batcher.addQuery(new ImageSearchCriteria("cats", "png").setSecondaryCrawl(seccrawl));
+        batcher.addQuery(new ImageSearchCriteria("cats", "gif").setSecondaryCrawl(seccrawl));
+        batcher.addQuery(new ImageSearchCriteria("cats", "bmp").setSecondaryCrawl(seccrawl));
+        batcher.addQuery(new ImageSearchCriteria("cats", "jpg").setSecondaryCrawl(seccrawl));
+        
+        batcher.addQuery(new ImageSearchCriteria("cows", "png").setSecondaryCrawl(seccrawl));
+        batcher.addQuery(new ImageSearchCriteria("cows", "gif").setSecondaryCrawl(seccrawl));
+        batcher.addQuery(new ImageSearchCriteria("cows", "bmp").setSecondaryCrawl(seccrawl));
+        batcher.addQuery(new ImageSearchCriteria("cows", "jpg").setSecondaryCrawl(seccrawl));
+        
+        batcher.addQuery(new ImageSearchCriteria("chickens", "png").setSecondaryCrawl(seccrawl));
+        batcher.addQuery(new ImageSearchCriteria("chickens", "gif").setSecondaryCrawl(seccrawl));
+        batcher.addQuery(new ImageSearchCriteria("chickens", "bmp").setSecondaryCrawl(seccrawl));
+        batcher.addQuery(new ImageSearchCriteria("chickens", "jpg").setSecondaryCrawl(seccrawl));
+        
+        batcher.addQuery(new ImageSearchCriteria("john cena", "png").setSecondaryCrawl(seccrawl));
+        batcher.addQuery(new ImageSearchCriteria("john cena", "gif").setSecondaryCrawl(seccrawl));
+        batcher.addQuery(new ImageSearchCriteria("john cena", "bmp").setSecondaryCrawl(seccrawl));
+        batcher.addQuery(new ImageSearchCriteria("john cena", "jpg").setSecondaryCrawl(seccrawl));
+   
+        batcher.addQuery(new DocumentSearchCriteria("dogs", "ppt"));
+        batcher.addQuery(new DocumentSearchCriteria("dogs", "pdf"));
+        batcher.addQuery(new DocumentSearchCriteria("dogs", "doc"));
+        batcher.addQuery(new DocumentSearchCriteria("dogs", "xls"));
+ 
+         batcher.addQuery(new DocumentSearchCriteria("cats", "ppt"));
+        batcher.addQuery(new DocumentSearchCriteria("cats", "pdf"));
+        batcher.addQuery(new DocumentSearchCriteria("cats", "doc"));
+        batcher.addQuery(new DocumentSearchCriteria("cats", "xls"));
+        
+         batcher.addQuery(new DocumentSearchCriteria("dogs", "ppt"));
+        batcher.addQuery(new DocumentSearchCriteria("dogs", "pdf"));
+        batcher.addQuery(new DocumentSearchCriteria("dogs", "doc"));
+        batcher.addQuery(new DocumentSearchCriteria("dogs", "xls"));
+        
+         batcher.addQuery(new DocumentSearchCriteria("chickens", "ppt"));
+        batcher.addQuery(new DocumentSearchCriteria("chickens", "pdf"));
+        batcher.addQuery(new DocumentSearchCriteria("chickens", "doc"));
+        batcher.addQuery(new DocumentSearchCriteria("chickens", "xls"));
+        
+         batcher.addQuery(new DocumentSearchCriteria("john cena", "ppt"));
+        batcher.addQuery(new DocumentSearchCriteria("john cena", "pdf"));
+        batcher.addQuery(new DocumentSearchCriteria("john cena", "doc"));
+        batcher.addQuery(new DocumentSearchCriteria("john cena", "xls"));
+        
        batcher.execute();
        
        links = batcher.getLinks();

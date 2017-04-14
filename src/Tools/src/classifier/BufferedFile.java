@@ -23,7 +23,9 @@ import javax.imageio.ImageIO;
 public class BufferedFile {
     public static final int WINDOW_SIZE = 8192;
     
+    private double percentageZero = 0;
     private int[] digraph =null;
+    private byte[] normalizedDigraph = null;
     private int[] histogram = null;
     private int[] H = null;
     private int offset = 0;
@@ -31,9 +33,11 @@ public class BufferedFile {
     
     public long getLength() { return length;}
     
-    public int[] getDigraph() { return digraph;}
+    public byte[] getDigraph() { return normalizedDigraph;}
     
     private java.io.RandomAccessFile file = null;
+    
+    public double getPercentageZero() {return percentageZero ;}
     
     /**
      * Opens the specified file for processing.
@@ -55,6 +59,7 @@ public class BufferedFile {
         digraph = new int[256*256];
         histogram = new int[WINDOW_SIZE];
         H = new int[WINDOW_SIZE];
+        normalizedDigraph = new byte[256*256];
         length = file.length();
     }
     
@@ -117,6 +122,7 @@ public class BufferedFile {
             if(value < 0) break;
             
             digraph[prevValue*256+value]++;
+            prevValue = value;
         }
         
         normalizeDigraph();
@@ -125,6 +131,8 @@ public class BufferedFile {
     }
     
     protected void normalizeDigraph() {
+        percentageZero =0;
+        
         for(int i=0;i<histogram.length;i++) {
             histogram[i]=0;
         }
@@ -145,15 +153,19 @@ public class BufferedFile {
         if(range == 0) range = 1;
         int clr;
         for(int i=0;i<256*256;i++) {
+           
             clr = digraph[i];
-            digraph[i] = (H[clr] - H[0]) * 255 / range;
+            normalizedDigraph[i] = (byte)((H[clr] - H[0]) * 255 / range);
+            
+            if(normalizedDigraph[i] == 0) percentageZero += 1;
         }
+        percentageZero /= 256*256;
     }
     
     public void dumpDigraphAsImage(String filename) throws IOException {
         BufferedImage image = new BufferedImage(256,256,BufferedImage.TYPE_INT_ARGB);
         for(int i=0;i<digraph.length;i++) {
-            image.setRGB(i % 256, i/256, i<<8);
+            image.setRGB(i % 256, i/256, 0xFF000000 | normalizedDigraph[i]<<8);
         }
         ImageIO.write(image, "png", new File(filename));
     }
