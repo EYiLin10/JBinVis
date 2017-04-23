@@ -125,16 +125,7 @@ public class CanvasShader {
             dispose(gl);
             return;
         }
-        
-        /*
-        gl.glValidateProgram(shaderprog);
-        gl.glGetProgramiv(shaderprog, GL2.GL_VALIDATE_STATUS, params, 0);
-        if(params[0] == GL2.GL_FALSE) {
-            printProgramLog(gl);
-            dispose(gl);
-            return;
-        }
-        */
+       
         
         initialised = true; 
     }

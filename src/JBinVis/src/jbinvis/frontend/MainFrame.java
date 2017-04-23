@@ -82,6 +82,7 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
         jMenu2 = new javax.swing.JMenu();
         menuBytemap = new javax.swing.JMenuItem();
         menuDigraph = new javax.swing.JMenuItem();
+        menuTrigraph = new javax.swing.JMenuItem();
         menuFreqHistogram = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -219,6 +220,15 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
         });
         jMenu2.add(menuDigraph);
 
+        menuTrigraph.setText("Trigraph");
+        menuTrigraph.setName(""); // NOI18N
+        menuTrigraph.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuTrigraphActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menuTrigraph);
+
         menuFreqHistogram.setText("Frequency Histogram");
         menuFreqHistogram.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -297,6 +307,10 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
         switchVisualisation(RenderLogicHolder.RL_FREQ_HISTOGRAM);
     }//GEN-LAST:event_menuFreqHistogramActionPerformed
 
+    private void menuTrigraphActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuTrigraphActionPerformed
+        switchVisualisation(RenderLogicHolder.RL_TRIGRAPH);
+    }//GEN-LAST:event_menuTrigraphActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -348,6 +362,7 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
     private javax.swing.JMenuItem menuDigraph;
     private javax.swing.JMenuItem menuFreqHistogram;
     private javax.swing.JMenuItem menuOpenFile;
+    private javax.swing.JMenuItem menuTrigraph;
     private javax.swing.JPanel panelCanvas;
     private javax.swing.JPanel panelConfigPane;
     private javax.swing.JPanel panelOffset;

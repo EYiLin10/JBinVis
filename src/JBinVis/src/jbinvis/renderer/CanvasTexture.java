@@ -37,6 +37,10 @@ public class CanvasTexture {
     public int getTextureUnit() {
         return textureUnit;
     }
+    
+    public int getTextureIndex() {
+        return texIndex[0];
+    }
 
     public byte[] getPixels() {
         return pixels;
