@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  *
  * @author Billy
  */
-public class Digrapher implements DirectoryWorker.DirectoryWorkerHandler{
+public class Digrapher implements DigraphOutputWorker.DigraphOutputWorkerHandler{
     private Stack<File> directories;
     private int runCount = 0;
     private static final int THREAD_COUNT = 4;
@@ -59,8 +59,8 @@ public class Digrapher implements DirectoryWorker.DirectoryWorkerHandler{
                 File f = directories.pop();
                 
                 // dispatch a new thread
-                DirectoryWorker w = new DirectoryWorker(f);
-                w.setFinishedHandler(this);
+                DigraphOutputWorker w = new DigraphOutputWorker(f);
+                w.setHandler(this);
                         
                 Thread thr = new Thread(w);
                 

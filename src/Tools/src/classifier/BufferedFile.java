@@ -130,6 +130,16 @@ public class BufferedFile {
         return true;
     }
     
+    public void getValue(int offset, byte[] buffer) {
+        try {
+            file.seek(offset);
+            file.read(buffer);
+        } catch (IOException ex) {
+            Logger.getLogger(BufferedFile.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    
     protected void normalizeDigraph() {
         percentageZero =0;
         
