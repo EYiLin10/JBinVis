@@ -87,9 +87,7 @@ public class Digrapher implements DigraphOutputWorker.DigraphOutputWorkerHandler
     }
     
     public static void main(String[] args) throws IOException {
-        System.setProperty("java.library.path", "x64");
-        System.loadLibrary("opencv_java2413");
-        
+
         Digrapher m = new Digrapher();
         m.run();
     }

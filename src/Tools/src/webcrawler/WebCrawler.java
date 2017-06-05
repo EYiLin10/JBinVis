@@ -24,8 +24,8 @@ public class WebCrawler {
     private ArrayList<String> links;
     
     public WebCrawler() {
-         CollectionBatcher batcher = new CollectionBatcher(100);
-         SecondaryImageCrawl seccrawl = new SecondaryImageCrawl(500);
+         CollectionBatcher batcher = new CollectionBatcher(200);
+         SecondaryImageCrawl seccrawl = new SecondaryImageCrawl(1000);
          
         batcher.addQuery(new ImageSearchCriteria("dogs", "png").setSecondaryCrawl(seccrawl));
         batcher.addQuery(new ImageSearchCriteria("dogs", "gif").setSecondaryCrawl(seccrawl));

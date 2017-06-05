@@ -6,9 +6,6 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
-import org.opencv.highgui.Highgui;
 
 public class DigraphOutputWorker implements Runnable {
     public static interface DigraphOutputWorkerHandler {
@@ -30,6 +27,7 @@ public class DigraphOutputWorker implements Runnable {
 		outputDir = "output/" + dir.getName() + "/";
 		File file = new File(outputDir);
 		file.mkdirs();
+		
 		
 	}
 	
@@ -77,14 +75,14 @@ public class DigraphOutputWorker implements Runnable {
         if(handler!=null) handler.onFinished();
 	}
 
-	private Mat image = null;
+	private ToolImage image = null;
 	
 	private void outputImage(byte[] digraph) {
 		if(image == null) {
-			image = new Mat(256,256,CvType.CV_8U);
+			image = new ToolImage(256,256);
 		}
 		
-		image.put(0, 0, digraph);
-		Highgui.imwrite(outputDir + count + ".png", image);
+		image.put(digraph);
+		image.save(outputDir + count + ".png");
 	}
 }
