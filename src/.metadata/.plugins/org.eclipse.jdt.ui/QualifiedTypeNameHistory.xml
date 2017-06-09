@@ -10,4 +10,23 @@
 <fullyQualifiedTypeName name="javax.imageio.ImageIO"/>
 <fullyQualifiedTypeName name="com.sun.java.util.jar.pack.Package.File"/>
 <fullyQualifiedTypeName name="java.io.File"/>
+<fullyQualifiedTypeName name="org.datavec.api.split.FileSplit"/>
+<fullyQualifiedTypeName name="org.datavec.image.loader.NativeImageLoader"/>
+<fullyQualifiedTypeName name="java.util.Random"/>
+<fullyQualifiedTypeName name="org.datavec.api.io.labels.ParentPathLabelGenerator"/>
+<fullyQualifiedTypeName name="org.datavec.api.io.filters.BalancedPathFilter"/>
+<fullyQualifiedTypeName name="org.datavec.api.split.InputSplit"/>
+<fullyQualifiedTypeName name="org.datavec.image.recordreader.ImageRecordReader"/>
+<fullyQualifiedTypeName name="org.deeplearning4j.datasets.iterator.DataSetIterator"/>
+<fullyQualifiedTypeName name="org.deeplearning4j.datasets.datavec.RecordReaderDataSetIterator"/>
+<fullyQualifiedTypeName name="org.nd4j.linalg.dataset.DataSet"/>
+<fullyQualifiedTypeName name="org.slf4j.LoggerFactory"/>
+<fullyQualifiedTypeName name="org.slf4j.Logger"/>
+<fullyQualifiedTypeName name="org.datavec.api.records.listener.impl.LogRecordListener"/>
+<fullyQualifiedTypeName name="org.datavec.api.records.listener.RecordListener"/>
+<fullyQualifiedTypeName name="java.io.FileWriter"/>
+<fullyQualifiedTypeName name="org.nd4j.linalg.dataset.api.preprocessor.DataNormalization"/>
+<fullyQualifiedTypeName name="org.nd4j.linalg.dataset.api.preprocessor.ImagePreProcessingScaler"/>
+<fullyQualifiedTypeName name="org.deeplearning4j.nn.conf.layers.DenseLayer"/>
+<fullyQualifiedTypeName name="org.deeplearning4j.optimize.listeners.ScoreIterationListener"/>
 </qualifiedTypeNameHistroy>

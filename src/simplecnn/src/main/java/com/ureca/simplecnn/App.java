@@ -1,6 +1,18 @@
 package com.ureca.simplecnn;
 
-import org.deeplearning4j.datasets.iterator.impl.CifarDataSetIterator;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Random;
+
+import org.datavec.api.io.filters.BalancedPathFilter;
+import org.datavec.api.io.labels.ParentPathLabelGenerator;
+import org.datavec.api.records.listener.impl.LogRecordListener;
+import org.datavec.api.split.FileSplit;
+import org.datavec.api.split.InputSplit;
+import org.datavec.image.loader.NativeImageLoader;
+import org.datavec.image.recordreader.ImageRecordReader;
+import org.deeplearning4j.datasets.datavec.RecordReaderDataSetIterator;
 import org.deeplearning4j.eval.Evaluation;
 import org.deeplearning4j.nn.api.OptimizationAlgorithm;
 import org.deeplearning4j.nn.conf.MultiLayerConfiguration;
@@ -10,8 +22,14 @@ import org.deeplearning4j.nn.conf.inputs.InputType;
 import org.deeplearning4j.nn.conf.layers.*;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
 import org.deeplearning4j.nn.weights.WeightInit;
+import org.deeplearning4j.optimize.listeners.ScoreIterationListener;
 import org.nd4j.linalg.activations.Activation;
+import org.nd4j.linalg.dataset.DataSet;
+import org.nd4j.linalg.dataset.api.preprocessor.DataNormalization;
+import org.nd4j.linalg.dataset.api.preprocessor.ImagePreProcessingScaler;
 import org.nd4j.linalg.lossfunctions.LossFunctions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Hello world!
@@ -19,13 +37,41 @@ import org.nd4j.linalg.lossfunctions.LossFunctions;
  */
 public class App 
 {
-    public static void main( String[] args )
+	private static Logger log = LoggerFactory.getLogger(App.class);
+	
+    protected static int numExamples = 80;
+    protected static int numLabels = 7;
+    protected static int batchSize = 20;
+    protected static int numEpochs = 500;
+    
+    public static void main( String[] args ) throws Exception
     {
-    	CifarDataSetIterator dataSetIterator = 
-                new CifarDataSetIterator(10, 5000, true);
+    	org.apache.log4j.BasicConfigurator.configure();
     	
+    	Random rng = new Random();
+    	
+    	ParentPathLabelGenerator labelMaker = new ParentPathLabelGenerator();
+    	File mainPath = new File("../Tools/output/");
+    	FileSplit fileSplit = new FileSplit(mainPath, NativeImageLoader.ALLOWED_FORMATS, rng);
+    	BalancedPathFilter pathFilter = new BalancedPathFilter(rng, labelMaker, numExamples, numLabels, batchSize);
+
+        InputSplit[] inputSplit = fileSplit.sample(pathFilter, 0.8, 0.2);
+        InputSplit trainData = inputSplit[0];
+        InputSplit testData = inputSplit[1];   
+        
+        ImageRecordReader recordReader = new ImageRecordReader(256,256,1,labelMaker);
+        recordReader.initialize(trainData);
+       
+        RecordReaderDataSetIterator dataIter = new RecordReaderDataSetIterator(recordReader, batchSize, 1, numLabels);
+        
+        DataNormalization normalizer = new ImagePreProcessingScaler(0,1);
+        normalizer.fit(dataIter);
+        dataIter.setPreProcessor(normalizer);
+        
+        log.info("** BUILD MODEL **");
+
     	ConvolutionLayer layer0 = new ConvolutionLayer.Builder(5,5)
-    	        .nIn(3)
+    	        .nIn(1)
     	        .nOut(16)
     	        .stride(1,1)
     	        .padding(2,2)
@@ -70,16 +116,22 @@ public class App
     	        .name("Third subsampling layer")
     	        .build();
 
-    	OutputLayer layer6 = new OutputLayer.Builder(LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD)
+    	DenseLayer layer6 = new DenseLayer.Builder()
+    			.activation(Activation.RELU)
+    			.nOut(384)
+    			.weightInit(WeightInit.XAVIER)
+    			.name("Dense layer")
+    			.build();
+    	
+    	OutputLayer layer7 = new OutputLayer.Builder(LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD)
     	        .activation(Activation.SOFTMAX)
     	        .weightInit(WeightInit.XAVIER)
     	        .name("Output")
-    	        .nOut(10)
+    	        .nOut(numLabels)
     	        .build();
     	
     	MultiLayerConfiguration configuration = new NeuralNetConfiguration.Builder()
     	        .seed(12345)
-    	        .iterations(5)
     	        .optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT)
     	        .learningRate(0.01)
     	        .regularization(true)
@@ -94,17 +146,19 @@ public class App
     	            .layer(4, layer4)
     	            .layer(5, layer5)
     	            .layer(6, layer6)
+    	            .layer(7,  layer7)
     	        .pretrain(false)
     	        .backprop(true)
-    	        .setInputType(InputType.convolutional(32,32,3))
+    	        .setInputType(InputType.convolutional(256,256,1))
     	        .build();
     	
     	MultiLayerNetwork network = new MultiLayerNetwork(configuration);
     	network.init();
     	
-    	network.fit(dataSetIterator);
+    	network.setListeners(new ScoreIterationListener(1));
     	
-    	Evaluation evaluation = network.evaluate(new CifarDataSetIterator(2, 500, false));
-    	System.out.println(evaluation.stats());
+    	for(int i=0;i<numEpochs;i++) {
+    		network.fit(dataIter);
+    	}
     }
 }
