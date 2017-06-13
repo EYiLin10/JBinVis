@@ -23,7 +23,9 @@ import org.deeplearning4j.nn.conf.layers.*;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
 import org.deeplearning4j.nn.weights.WeightInit;
 import org.deeplearning4j.optimize.listeners.ScoreIterationListener;
+import org.deeplearning4j.util.ModelSerializer;
 import org.nd4j.linalg.activations.Activation;
+import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.dataset.DataSet;
 import org.nd4j.linalg.dataset.api.preprocessor.DataNormalization;
 import org.nd4j.linalg.dataset.api.preprocessor.ImagePreProcessingScaler;
@@ -39,10 +41,10 @@ public class App
 {
 	private static Logger log = LoggerFactory.getLogger(App.class);
 	
-    protected static int numExamples = 80;
+    protected static int numExamples = 100;
     protected static int numLabels = 7;
-    protected static int batchSize = 20;
-    protected static int numEpochs = 500;
+    protected static int batchSize = 128;
+    protected static int numEpochs = 100;
     
     public static void main( String[] args ) throws Exception
     {
@@ -118,7 +120,7 @@ public class App
 
     	DenseLayer layer6 = new DenseLayer.Builder()
     			.activation(Activation.RELU)
-    			.nOut(384)
+    			.nOut(512)
     			.weightInit(WeightInit.XAVIER)
     			.name("Dense layer")
     			.build();
@@ -131,11 +133,12 @@ public class App
     	        .build();
     	
     	MultiLayerConfiguration configuration = new NeuralNetConfiguration.Builder()
-    	        .seed(12345)
+    	        .seed(1200)
+    	        .iterations(1)
     	        .optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT)
     	        .learningRate(0.01)
     	        .regularization(true)
-    	        .l2(0.01)
+    	        .l2(1e-4)
     	        .updater(Updater.NESTEROVS)
     	        .momentum(0.9)
     	        .list()
@@ -160,5 +163,25 @@ public class App
     	for(int i=0;i<numEpochs;i++) {
     		network.fit(dataIter);
     	}
+    	
+    	recordReader.reset();
+    	recordReader.initialize(testData);
+    	
+    	RecordReaderDataSetIterator testIter = new RecordReaderDataSetIterator(recordReader,batchSize,1,numLabels);
+    	normalizer.fit(testIter);
+    	testIter.setPreProcessor(normalizer);
+    	
+    	Evaluation eval = new Evaluation(numLabels);
+    	while(testIter.hasNext()) {
+    		DataSet iter = testIter.next();
+    		INDArray output = network.output(iter.getFeatureMatrix());
+    		eval.eval(iter.getLabels(), output);
+    	}
+    	log.info(eval.stats());
+    	
+    	log.info("** SAVE MODEL **");
+    	
+    	File modelLocation = new File("trained_model.zip");
+    	ModelSerializer.writeModel(network, modelLocation, false);
     }
 }

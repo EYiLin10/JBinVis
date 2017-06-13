@@ -29,4 +29,7 @@
 <fullyQualifiedTypeName name="org.nd4j.linalg.dataset.api.preprocessor.ImagePreProcessingScaler"/>
 <fullyQualifiedTypeName name="org.deeplearning4j.nn.conf.layers.DenseLayer"/>
 <fullyQualifiedTypeName name="org.deeplearning4j.optimize.listeners.ScoreIterationListener"/>
+<fullyQualifiedTypeName name="org.deeplearning4j.eval.Evaluation"/>
+<fullyQualifiedTypeName name="org.nd4j.linalg.api.ndarray.INDArray"/>
+<fullyQualifiedTypeName name="org.deeplearning4j.util.ModelSerializer"/>
 </qualifiedTypeNameHistroy>
