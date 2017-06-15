@@ -31,5 +31,7 @@
 <fullyQualifiedTypeName name="org.deeplearning4j.optimize.listeners.ScoreIterationListener"/>
 <fullyQualifiedTypeName name="org.deeplearning4j.eval.Evaluation"/>
 <fullyQualifiedTypeName name="org.nd4j.linalg.api.ndarray.INDArray"/>
+<fullyQualifiedTypeName name="org.deeplearning4j.nn.multilayer.MultiLayerNetwork"/>
 <fullyQualifiedTypeName name="org.deeplearning4j.util.ModelSerializer"/>
+<fullyQualifiedTypeName name="jbinvis.backend.DigraphConvNet"/>
 </qualifiedTypeNameHistroy>
