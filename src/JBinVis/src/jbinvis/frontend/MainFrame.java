@@ -4,6 +4,8 @@
 package jbinvis.frontend;
 
 import jbinvis.frontend.settingspanel.BytemapSettingsPanel;
+import jbinvis.frontend.settingspanel.DigraphSettingsPanel;
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.KeyEvent;
@@ -15,6 +17,7 @@ import jbinvis.main.FileUpdateListener;
 import jbinvis.main.JBinVis;
 import jbinvis.renderer.BinVisCanvas;
 import jbinvis.visualisations.Bytemap;
+import jbinvis.visualisations.Digraph;
 
 /**
  *
@@ -26,6 +29,7 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
     private BinVisCanvas canvas = null;
     private final JBinVis jbinvis;
     private BytemapSettingsPanel bytemapConfigPanel;
+    private DigraphSettingsPanel digraphConfigPanel;
 
     /**
      * Creates new form MainFrame
@@ -46,7 +50,10 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
 
         // initialise config panels
         bytemapConfigPanel = new BytemapSettingsPanel();
+        digraphConfigPanel = new DigraphSettingsPanel();
         ((Bytemap) RenderLogicHolder.fromId(RenderLogicHolder.RL_BYTEMAP)).attachPanel(bytemapConfigPanel);
+        ((Digraph) RenderLogicHolder.fromId(RenderLogicHolder.RL_DIGRAPH)).attachPanel(digraphConfigPanel);
+        
 
         // default to bytemap in the beginning
         switchVisualisation(RenderLogicHolder.RL_BYTEMAP);
@@ -445,6 +452,9 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
         switch (index) {
             case RenderLogicHolder.RL_BYTEMAP:
                 this.panelConfigPane.add(bytemapConfigPanel, BorderLayout.CENTER);
+                break;
+            case RenderLogicHolder.RL_DIGRAPH:
+                this.panelConfigPane.add(digraphConfigPanel, BorderLayout.CENTER);
                 break;
         }
 

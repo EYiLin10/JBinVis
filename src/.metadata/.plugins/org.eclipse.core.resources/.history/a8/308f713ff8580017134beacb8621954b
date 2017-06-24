@@ -1,0 +1,27 @@
+package jbinvis.frontend.settingspanel;
+
+import jbinvis.frontend.QuickEnable;
+
+public class DigraphSettingsPanel extends javax.swing.JPanel implements QuickEnable{
+	public DigraphSettingsPanel() {
+		initComponents();
+	}
+	
+	
+	private void initComponents() {
+		
+	}
+	
+	@Override
+	public void enableAll() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void disableAll() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

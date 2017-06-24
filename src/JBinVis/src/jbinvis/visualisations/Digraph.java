@@ -2,7 +2,13 @@ package jbinvis.visualisations;
 
 import com.jogamp.opengl.GL2;
 import java.util.HashMap;
+import java.util.List;
+
+import jbinvis.backend.DigraphConvNet;
 import jbinvis.backend.FileCache;
+import jbinvis.backend.LabelProbability;
+import jbinvis.frontend.settingspanel.DigraphSettingsPanel;
+import jbinvis.frontend.settingspanel.SettingsToLogicInterface;
 import jbinvis.main.FileUpdateListener;
 import jbinvis.main.JBinVis;
 import jbinvis.renderer.BinVisCanvas;
@@ -15,7 +21,7 @@ import jbinvis.renderer.camera.OrthographicCamera;
  * The digraph plot
  * @author Billy
  */
-public class Digraph extends RenderLogic implements FileUpdateListener {
+public class Digraph extends RenderLogic implements FileUpdateListener, SettingsToLogicInterface<DigraphSettingsPanel> {
     private JBinVis jbinvis;
     
     private CanvasTexture contrastTex = null;
@@ -25,6 +31,10 @@ public class Digraph extends RenderLogic implements FileUpdateListener {
     
     private int uniformSamplerContrast;
     private int uniformSamplerTexture;
+    
+    private DigraphConvNet ai;
+    
+    private DigraphSettingsPanel settingsPanel = null;
     
     
     private int[] histogram = null;
@@ -39,6 +49,7 @@ public class Digraph extends RenderLogic implements FileUpdateListener {
     public Digraph() {
         jbinvis = JBinVis.getInstance();
         pdf = new float[256];
+        ai = DigraphConvNet.create("../simplecnn/trained_model.zip");
     }
 
     @Override
@@ -170,6 +181,21 @@ public class Digraph extends RenderLogic implements FileUpdateListener {
             texture.setPixel(i%256, i/256, ((H[clr] - H[0]) * 255 / range)<<8 | 0xFF000000);
         }
     }
+    
+
+    private void computeProbability() {
+    	if(settingsPanel == null) return;
+    	
+		List<LabelProbability> probs = ai.evaluate(texture);
+		LabelProbability probMax = probs.get(0);
+		
+		for(int i=1;i<probs.size();i++) {
+			if(probs.get(i).getProbability() > probMax.getProbability())
+				probMax = probs.get(i);
+		}
+		
+		settingsPanel.setFileTypeText(probMax.getLabel());
+	}
 
     @Override
     public String getName() {
@@ -179,15 +205,18 @@ public class Digraph extends RenderLogic implements FileUpdateListener {
     @Override
     public void fileOffsetUpdated() {
         colorTexture();
+        computeProbability();
     }
 
-    @Override
+
+	@Override
     public void fileClosed() {
     }
 
     @Override
     public void fileOpened() {
         colorTexture();
+        computeProbability();
     }
 
     @Override
@@ -205,6 +234,16 @@ public class Digraph extends RenderLogic implements FileUpdateListener {
         jbinvis.removeFileUpdateListener(this);
         System.gc();
     }
-    
+
+	@Override
+	public void attachPanel(DigraphSettingsPanel settingsPanel) {
+		this.settingsPanel = settingsPanel;
+	}
+
+	@Override
+	public void detachPanel() {
+		settingsPanel = null;
+	}
+
     
 }
