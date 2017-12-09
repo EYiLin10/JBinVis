@@ -8,6 +8,7 @@ import jbinvis.frontend.settingspanel.DigraphSettingsPanel;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -56,7 +57,7 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
         
 
         // default to bytemap in the beginning
-        switchVisualisation(RenderLogicHolder.RL_BYTEMAP);
+        switchVisualisation(RenderLogicHolder.RL_SPHERE);
 
     }
 
@@ -90,6 +91,7 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
         menuBytemap = new javax.swing.JMenuItem();
         menuDigraph = new javax.swing.JMenuItem();
         menuTrigraph = new javax.swing.JMenuItem();
+        menuSphere = new javax.swing.JMenuItem();
         menuFreqHistogram = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -244,6 +246,15 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
         });
         jMenu2.add(menuFreqHistogram);
 
+        menuSphere.setText("Sphere");
+        menuSphere.setName(""); // NOI18N
+        menuSphere.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuSphereActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menuSphere);
+        
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -318,6 +329,10 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
         switchVisualisation(RenderLogicHolder.RL_TRIGRAPH);
     }//GEN-LAST:event_menuTrigraphActionPerformed
 
+	private void menuSphereActionPerformed(ActionEvent evt) {
+		switchVisualisation(RenderLogicHolder.RL_SPHERE);
+	}
+
     /**
      * @param args the command line arguments
      */
@@ -370,6 +385,7 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
     private javax.swing.JMenuItem menuFreqHistogram;
     private javax.swing.JMenuItem menuOpenFile;
     private javax.swing.JMenuItem menuTrigraph;
+    private javax.swing.JMenuItem menuSphere;
     private javax.swing.JPanel panelCanvas;
     private javax.swing.JPanel panelConfigPane;
     private javax.swing.JPanel panelOffset;

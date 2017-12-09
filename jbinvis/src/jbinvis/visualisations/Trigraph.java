@@ -55,7 +55,7 @@ public class Trigraph extends RenderLogic implements FileUpdateListener{
     private int u_volume = 0;
     
     private boolean signalUpdateTexture = false;
-    private boolean initialized =false;
+    private boolean initialized = false;
     
     public Trigraph() {
        jbinvis = JBinVis.getInstance();
@@ -348,6 +348,11 @@ public class Trigraph extends RenderLogic implements FileUpdateListener{
             b = file.read(offset+i+1) >> 1;
             c = file.read(offset+i+2) >> 1;
             buffOff=4*(a*sideCountSq + b*sideCount + c);
+            
+//          System.out.print("x = " + a + "\n");
+//        	System.out.print("y = " + b + "\n");
+//        	System.out.print("z = " + c + "\n");
+            
             tex3DBuffer[buffOff+1]=(byte)255;
             tex3DBuffer[buffOff+2]=(byte)255;
             /*
