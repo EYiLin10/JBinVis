@@ -5,13 +5,20 @@ package jbinvis.frontend;
 
 import jbinvis.frontend.settingspanel.BytemapSettingsPanel;
 import jbinvis.frontend.settingspanel.DigraphSettingsPanel;
+import jbinvis.frontend.hexTable.EventListeners;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import jbinvis.main.FileUpdateListener;
@@ -19,6 +26,7 @@ import jbinvis.main.JBinVis;
 import jbinvis.renderer.BinVisCanvas;
 import jbinvis.visualisations.Bytemap;
 import jbinvis.visualisations.Digraph;
+import jbinvis.visualisations.Sphere;
 
 /**
  *
@@ -31,15 +39,25 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
     private final JBinVis jbinvis;
     private BytemapSettingsPanel bytemapConfigPanel;
     private DigraphSettingsPanel digraphConfigPanel;
+    private EventListeners SphEvt;
+        
+    // filename of file read
+    public String fileName = null;					
+    
+    // SINGLETON //
+    private static MainFrame _mainframe = null;
 
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
+    	
         initComponents();
         jbinvis = JBinVis.getInstance();
         jbinvis.addFileUpdateListener(this);
 
+        _mainframe = this;
+        
         canvas = BinVisCanvas.create(panelCanvas);
 
         menuCloseFile.setEnabled(false);
@@ -52,11 +70,16 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
         // initialise config panels
         bytemapConfigPanel = new BytemapSettingsPanel();
         digraphConfigPanel = new DigraphSettingsPanel();
+        //sphereConfigPanel = new SphereSettingsPanel();
         ((Bytemap) RenderLogicHolder.fromId(RenderLogicHolder.RL_BYTEMAP)).attachPanel(bytemapConfigPanel);
         ((Digraph) RenderLogicHolder.fromId(RenderLogicHolder.RL_DIGRAPH)).attachPanel(digraphConfigPanel);
+        //((Sphere) RenderLogicHolder.fromId(RenderLogicHolder.RL_SPHERE)).attachPanel(sphereConfigPanel);
+        
+        // register 
+        //jbinvis.addFileUpdateListener(sphereConfigPanel);
         
 
-        // default to bytemap in the beginning
+        // default to sphere in the beginning
         switchVisualisation(RenderLogicHolder.RL_SPHERE);
 
     }
@@ -93,7 +116,7 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
         menuTrigraph = new javax.swing.JMenuItem();
         menuSphere = new javax.swing.JMenuItem();
         menuFreqHistogram = new javax.swing.JMenuItem();
-
+        
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(640, 640));
         setPreferredSize(new java.awt.Dimension(640, 640));
@@ -251,13 +274,14 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
         menuSphere.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuSphereActionPerformed(evt);
+                //SphEvt.createReadListener();
             }
         });
         jMenu2.add(menuSphere);
         
         jMenuBar1.add(jMenu2);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(jMenuBar1);     
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -274,6 +298,14 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
         if (retval == JFileChooser.APPROVE_OPTION) {
             jbinvis.loadFile(fc.getSelectedFile().getAbsolutePath());
             menuCloseFile.setEnabled(true);
+            fileName = fc.getSelectedFile().toString(); 
+            
+            HexTableFrame hexTableFrame = new HexTableFrame();
+            hexTableFrame.setVisible(true);
+            hexTableFrame.setSize(new java.awt.Dimension(640, 640)); 
+
+            SphEvt = new EventListeners("read");
+       
         }
     }//GEN-LAST:event_menuOpenFileActionPerformed
 
@@ -385,7 +417,7 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
     private javax.swing.JMenuItem menuFreqHistogram;
     private javax.swing.JMenuItem menuOpenFile;
     private javax.swing.JMenuItem menuTrigraph;
-    private javax.swing.JMenuItem menuSphere;
+    public javax.swing.JMenuItem menuSphere;
     private javax.swing.JPanel panelCanvas;
     private javax.swing.JPanel panelConfigPane;
     private javax.swing.JPanel panelOffset;
@@ -447,6 +479,8 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
         labelFileSize.setText(Long.toString(jbinvis.getFileSize()));
 
         setSettingsPanelEnabled(true);
+        
+        
     }
 
     /**
@@ -472,6 +506,9 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
             case RenderLogicHolder.RL_DIGRAPH:
                 this.panelConfigPane.add(digraphConfigPanel, BorderLayout.CENTER);
                 break;
+            //case RenderLogicHolder.RL_SPHERE:
+                //this.panelConfigPane.add(sphereConfigPanel, BorderLayout.CENTER);
+                //break;
         }
 
         panelConfigPane.validate();
@@ -512,6 +549,10 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
                         + " does not implement QuickEnable.");
             }
         }
+    }
+    
+    public static MainFrame getInstance() {
+        return _mainframe;
     }
 
 }

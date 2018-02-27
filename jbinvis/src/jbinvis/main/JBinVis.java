@@ -139,9 +139,11 @@ public class JBinVis {
         // initialise Hilbert curve
         Hilbert.getInstance();
         
+        //MainFrame frame = new MainFrame();
+        
         MainFrame frame = new MainFrame();
         frame.setTitle("JBinVis");
-        frame.setVisible(true);
+        frame.setVisible(true); 
 
     }
     

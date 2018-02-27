@@ -6,6 +6,7 @@ import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
 import jbinvis.backend.FileCache;
+import jbinvis.frontend.settingspanel.BytemapSettingsPanel;
 import jbinvis.renderer.camera.PerspectiveCamera;
 import jbinvis.main.FileUpdateListener;
 import jbinvis.main.JBinVis;
@@ -16,6 +17,10 @@ import jbinvis.renderer.RenderLogic;
 import jbinvis.renderer.camera.OrthographicCamera;
 
 
+/**
+ * @author YiLin
+ * edited from Billy's Trigraph
+ */
 public class Sphere extends RenderLogic implements FileUpdateListener {
 	private JBinVis jbinvis;
     private PerspectiveCamera camera;
@@ -423,6 +428,7 @@ public class Sphere extends RenderLogic implements FileUpdateListener {
     public void onUnattachFromCanvas(BinVisCanvas canvas) {
         jbinvis.removeFileUpdateListener(this);
     }
+
 
 	
 }
