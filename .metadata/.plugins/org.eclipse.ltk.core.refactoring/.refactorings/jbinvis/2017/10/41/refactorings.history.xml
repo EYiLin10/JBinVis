@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename compilation unit &apos;jbinvis.visualisations.RandomVisual.java&apos; to &apos;Sphere.java&apos;&#x0D;&#x0A;- Original project: &apos;jbinvis&apos;&#x0D;&#x0A;- Original element: &apos;jbinvis.visualisations.RandomVisual.java&apos;&#x0D;&#x0A;- Renamed element: &apos;jbinvis.visualisations.Sphere.java&apos;" description="Rename compilation unit &apos;RandomVisual.java&apos;" flags="2" id="org.eclipse.jdt.ui.rename.compilationunit" input="/src&lt;jbinvis.visualisations{RandomVisual.java" name="Sphere.java" references="false" stamp="1507599500811" version="1.0"/>
+</session>

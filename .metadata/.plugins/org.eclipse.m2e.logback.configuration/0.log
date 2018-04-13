@@ -1,0 +1,199 @@
+2017-09-20 11:42:38,941 [Worker-0] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
+2017-09-20 11:56:54,373 [Worker-2] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.beelee:jbinvis:0.0.1 @ E:\Projects\JBinVis\jbinvis\pom.xml.
+2017-09-20 11:57:00,481 [Worker-2] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /jbinvis/src
+2017-09-20 11:57:00,483 [Worker-2] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Not adding source folder /jbinvis/src/test/java because it overlaps with /jbinvis/src
+2017-09-20 11:57:00,722 [Worker-2] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Imported and configured 1 project(s) in 14 sec
+2017-09-20 11:57:03,189 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-20 11:57:03,226 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-09-20 11:57:03,228 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-20 11:57:03,234 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-10-09 18:05:20,147 [Worker-6] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
+2017-10-09 23:43:22,513 [Worker-2] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2017-10-09 23:43:31,222 [Worker-4] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.beelee:jbinvis:0.0.1 @ E:\Projects\JBinVis\jbinvis\pom.xml.
+2017-10-09 23:43:36,366 [Worker-4] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-09 23:43:36,373 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-10-09 23:43:36,375 [Worker-4] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-09 23:43:36,382 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-10-09 23:52:44,564 [Worker-11] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-09 23:52:44,601 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-10-09 23:52:44,602 [Worker-11] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-09 23:52:44,611 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-10-09 23:53:04,006 [Worker-19] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-09 23:53:04,016 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-10-09 23:53:04,018 [Worker-19] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-09 23:53:04,027 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-10-09 23:53:15,100 [Worker-11] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-09 23:53:15,108 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-10-09 23:53:15,110 [Worker-11] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-09 23:53:15,118 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-10-09 23:53:31,992 [Worker-20] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-09 23:53:32,002 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-10-09 23:53:32,004 [Worker-20] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-09 23:53:32,012 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-10-10 00:01:38,216 [Worker-24] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-10 00:01:38,532 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-10-10 00:01:38,533 [Worker-24] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-10 00:01:38,546 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-10-10 09:38:13,989 [Worker-27] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-10 09:38:14,023 [Worker-27] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-10-10 09:38:14,026 [Worker-27] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-10 09:38:14,035 [Worker-27] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-10-10 09:38:21,062 [Worker-25] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-10 09:38:21,073 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-10-10 09:38:21,074 [Worker-25] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-10 09:38:21,085 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-10-10 09:40:07,764 [Worker-31] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-10 09:40:07,792 [Worker-31] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-10-10 09:40:07,794 [Worker-31] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-10 09:40:07,802 [Worker-31] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-10-10 09:40:57,772 [Worker-31] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-10 09:40:57,784 [Worker-31] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-10-10 09:40:57,786 [Worker-31] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-10 09:40:57,797 [Worker-31] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-10-10 09:44:37,903 [Worker-11] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-10 09:44:37,908 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-10-10 09:44:37,909 [Worker-11] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-10 09:44:37,915 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-10-10 09:50:29,918 [Worker-30] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-10 09:50:29,935 [Worker-30] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-10-10 09:50:29,937 [Worker-30] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-10 09:50:29,954 [Worker-30] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-10-10 09:50:49,635 [Worker-29] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-10 09:50:49,643 [Worker-29] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-10-10 09:50:49,645 [Worker-29] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-10 09:50:49,665 [Worker-29] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-10-22 16:10:55,474 [Worker-4] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is not available. Remote download required.
+2017-10-22 16:11:05,353 [Worker-1] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.beelee:jbinvis:0.0.1 @ E:\Projects\JBinVis\jbinvis\pom.xml.
+2017-10-22 16:11:11,243 [Worker-6] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-22 16:11:11,281 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-10-22 16:11:11,289 [Worker-6] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-22 16:11:11,321 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-10-22 21:56:44,092 [Worker-4] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2017-10-23 22:24:06,735 [Worker-5] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
+2017-10-23 22:24:29,421 [Worker-4] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-23 22:24:29,484 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-10-23 22:24:29,487 [Worker-4] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-23 22:24:29,504 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-10-23 22:44:26,006 [Worker-18] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-23 22:44:26,080 [Worker-18] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-10-23 22:44:26,082 [Worker-18] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-23 22:44:26,093 [Worker-18] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-10-23 22:46:10,960 [Worker-18] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-23 22:46:11,021 [Worker-18] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-10-23 22:46:11,024 [Worker-18] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-23 22:46:11,037 [Worker-18] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-10-23 22:48:50,839 [Worker-21] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-23 22:48:50,914 [Worker-21] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-10-23 22:48:50,915 [Worker-21] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-23 22:48:50,923 [Worker-21] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-10-23 23:08:36,636 [Worker-24] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-23 23:08:36,726 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-10-23 23:08:36,728 [Worker-24] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-23 23:08:36,763 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-10-23 23:09:01,862 [Worker-1] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2017-10-23 23:09:10,934 [Worker-7] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.beelee:jbinvis:0.0.1 @ E:\Projects\JBinVis\jbinvis\pom.xml.
+2017-10-23 23:09:10,934 [Worker-19] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.beelee:jbinvis:0.0.1 @ E:\Projects\JBinVis\jbinvis\pom.xml.
+2017-10-23 23:09:14,583 [Worker-19] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-23 23:09:14,591 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-10-23 23:09:14,593 [Worker-19] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-23 23:09:14,599 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-10-23 23:09:16,065 [Worker-15] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.beelee:jbinvis:0.0.1 @ E:\Projects\JBinVis\jbinvis\pom.xml.
+2017-10-23 23:09:17,200 [Worker-6] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-23 23:09:17,212 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-10-23 23:09:17,214 [Worker-6] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-23 23:09:17,221 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-10-24 00:17:21,065 [Worker-28] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-24 00:17:21,148 [Worker-28] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-10-24 00:17:21,149 [Worker-28] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-24 00:17:21,156 [Worker-28] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-10-24 01:00:51,380 [Worker-33] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-24 01:00:51,455 [Worker-33] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-10-24 01:00:51,456 [Worker-33] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-24 01:00:51,462 [Worker-33] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-10-24 01:03:46,434 [Worker-38] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-24 01:03:46,444 [Worker-38] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-10-24 01:03:46,446 [Worker-38] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-24 01:03:46,452 [Worker-38] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-10-24 01:39:11,238 [Worker-39] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-24 01:39:11,313 [Worker-39] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-10-24 01:39:11,314 [Worker-39] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-24 01:39:11,322 [Worker-39] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-10-24 01:39:13,197 [Worker-40] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-24 01:39:13,208 [Worker-40] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-10-24 01:39:13,209 [Worker-40] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-24 01:39:13,215 [Worker-40] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-10-24 01:39:19,712 [Worker-41] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-24 01:39:19,722 [Worker-41] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-10-24 01:39:19,724 [Worker-41] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-24 01:39:19,745 [Worker-41] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-10-24 01:45:41,341 [Worker-41] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-24 01:45:41,349 [Worker-41] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-10-24 01:45:41,351 [Worker-41] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-24 01:45:41,359 [Worker-41] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-10-24 02:05:19,247 [Worker-41] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-24 02:05:19,320 [Worker-41] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-10-24 02:05:19,322 [Worker-41] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-24 02:05:19,328 [Worker-41] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-10-24 02:06:05,873 [Worker-41] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-24 02:06:05,880 [Worker-41] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-10-24 02:06:05,882 [Worker-41] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-24 02:06:05,890 [Worker-41] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-10-24 02:09:39,918 [Worker-45] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-24 02:09:39,926 [Worker-45] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-10-24 02:09:39,928 [Worker-45] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-24 02:09:39,934 [Worker-45] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-10-25 12:42:42,998 [Worker-0] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
+2017-10-25 13:06:16,032 [Worker-21] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-25 13:06:16,117 [Worker-21] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-10-25 13:06:16,119 [Worker-21] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-25 13:06:16,126 [Worker-21] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-10-25 13:15:43,476 [Worker-6] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-25 13:15:43,546 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-10-25 13:15:43,547 [Worker-6] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-25 13:15:43,552 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-10-25 13:16:02,992 [Worker-25] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-25 13:16:03,001 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-10-25 13:16:03,009 [Worker-25] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-25 13:16:03,026 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-10-25 14:37:40,365 [Worker-23] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-25 14:37:40,419 [Worker-23] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-10-25 14:37:40,421 [Worker-23] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-25 14:37:40,429 [Worker-23] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-10-25 14:39:33,454 [Worker-26] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-25 14:39:33,461 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-10-25 14:39:33,462 [Worker-26] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-25 14:39:33,468 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-10-25 15:28:15,062 [Worker-26] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-25 15:28:15,075 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-10-25 15:28:15,077 [Worker-26] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-25 15:28:15,087 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-10-25 15:28:54,300 [Worker-32] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-25 15:28:54,309 [Worker-32] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-10-25 15:28:54,310 [Worker-32] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-25 15:28:54,316 [Worker-32] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-10-28 12:13:51,332 [Worker-2] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
+2017-10-30 21:41:42,696 [Worker-0] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
+2017-10-31 23:50:19,669 [Worker-3] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
+2017-10-31 23:52:29,212 [Worker-10] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-31 23:52:29,233 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-10-31 23:52:29,235 [Worker-10] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-10-31 23:52:29,243 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-11-01 00:49:49,704 [Worker-21] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-11-01 00:49:49,737 [Worker-21] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-11-01 00:49:49,738 [Worker-21] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-11-01 00:49:49,744 [Worker-21] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-11-01 00:58:25,765 [Worker-1] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-11-01 00:58:25,820 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-11-01 00:58:25,821 [Worker-1] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-11-01 00:58:25,833 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-11-01 01:20:35,397 [Worker-23] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-11-01 01:20:35,445 [Worker-23] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-11-01 01:20:35,447 [Worker-23] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-11-01 01:20:35,456 [Worker-23] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-11-03 20:49:09,591 [Worker-0] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
+2017-11-04 20:13:49,988 [Worker-4] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2017-11-04 20:14:26,122 [Worker-14] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-11-04 20:14:26,169 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\main\resources
+2017-11-04 20:14:26,171 [Worker-14] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2017-11-04 20:14:26,179 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Projects\JBinVis\jbinvis\src\test\resources
+2017-11-06 12:21:17,254 [Worker-4] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.

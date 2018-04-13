@@ -6,6 +6,7 @@ import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
 import jbinvis.backend.FileCache;
+import jbinvis.frontend.settingspanel.BytemapSettingsPanel;
 import jbinvis.renderer.camera.PerspectiveCamera;
 import jbinvis.main.FileUpdateListener;
 import jbinvis.main.JBinVis;
@@ -16,6 +17,10 @@ import jbinvis.renderer.RenderLogic;
 import jbinvis.renderer.camera.OrthographicCamera;
 
 
+/**
+ * @author YiLin
+ * edited from Billy's Trigraph
+ */
 public class Sphere extends RenderLogic implements FileUpdateListener {
 	private JBinVis jbinvis;
     private PerspectiveCamera camera;
@@ -132,6 +137,7 @@ public class Sphere extends RenderLogic implements FileUpdateListener {
         
 
         gl.glBindFramebuffer(GL2.GL_FRAMEBUFFER, 0);
+        gl.glColor4f(1.0f,0.0f,0.0f,1.0f);
     }
     
     private void generateTextures(GL2 gl) {
@@ -260,10 +266,10 @@ public class Sphere extends RenderLogic implements FileUpdateListener {
         shaderPass1.end(gl);
         
         // set render target back to normal
-        gl.glBindFramebuffer(GL2.GL_FRAMEBUFFER, 0);
-        
+        gl.glBindFramebuffer(GL2.GL_FRAMEBUFFER, 0);        
         
         // (2) render to screen
+        //bgcolor
         gl.glClearColor(0.5f,0.5f,0.5f,1);
         gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
         
@@ -289,7 +295,7 @@ public class Sphere extends RenderLogic implements FileUpdateListener {
         orthoCam.update(gl);
         
         gl.glBegin(GL2.GL_QUADS);
-        gl.glColor3d(1, 0.5, 0.5);
+        gl.glColor3d(0,0,1);
         gl.glVertex2d(centerX - halfQuadSize, centerY - halfQuadSize);
         gl.glTexCoord2d(1, 0);
         gl.glVertex2d(centerX + halfQuadSize, centerY - halfQuadSize);
@@ -330,6 +336,7 @@ public class Sphere extends RenderLogic implements FileUpdateListener {
 //    }
     
     private void update3DTexture() {
+    	System.out.println("Drawing Sphere");
         if(!jbinvis.isLoaded() || !initialized)
             return;
         long offset = jbinvis.getFileOffset();
@@ -348,7 +355,9 @@ public class Sphere extends RenderLogic implements FileUpdateListener {
             a = file.read(offset+i) >> 1;
             b = file.read(offset+i+1) >> 1;
             c = file.read(offset+i+2) >> 1;
-        
+        	
+        	//System.out.println("a: " + a);
+        	
 //        	// squares of a,b,c
 //        	int sq_a = (a-127)^2;
 //        	int sq_b = (b-127)^2;
@@ -375,7 +384,7 @@ public class Sphere extends RenderLogic implements FileUpdateListener {
         	y = (int) (r*Math.sin(theta) + sideCount/2);
         	z = (int) (r*Math.cos(theta)*Math.sin(phi) + sideCount/2);
         	
-            buffOff=4*(z*sideCountSq + y*sideCount + x);
+            buffOff = 4*(z*sideCountSq + y*sideCount + x);
             tex3DBuffer[buffOff+1]=(byte)255;
             tex3DBuffer[buffOff+2]=(byte)255;
             /*
@@ -398,6 +407,7 @@ public class Sphere extends RenderLogic implements FileUpdateListener {
     private boolean isAbove(byte v, int threshold) {
         return v > (threshold-256) && v<0;
     }
+    
 
     @Override
     public void fileOffsetUpdated() {
@@ -423,6 +433,7 @@ public class Sphere extends RenderLogic implements FileUpdateListener {
     public void onUnattachFromCanvas(BinVisCanvas canvas) {
         jbinvis.removeFileUpdateListener(this);
     }
+
 
 	
 }

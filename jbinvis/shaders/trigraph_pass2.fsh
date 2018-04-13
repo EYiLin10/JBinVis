@@ -20,7 +20,7 @@ void main() {
     vec3 dir = back-front;
     float totalDist = length(dir);
     if(totalDist < 0.000001) {
-        gl_FragColor = vec4(0,0,0,1);
+        gl_FragColor = vec4(0,0,0,1); //colour of the space outside the cube
         return;
     }
    

@@ -1,0 +1,18 @@
+package jbinvis.visualisations;
+
+import com.jogamp.opengl.GL2;
+
+import jbinvis.renderer.RenderLogic;
+
+public class Sphere extends RenderLogic {
+	@Override
+	public void init(GL2 gl) {
+	
+	}
+	
+	@Override
+	public void render(GL2 gl, double delta) {
+		gl.glClearColor(0, 1, 0, 1);
+		gl.glClear(GL2.GL_COLOR_BUFFER_BIT);
+	}
+}
