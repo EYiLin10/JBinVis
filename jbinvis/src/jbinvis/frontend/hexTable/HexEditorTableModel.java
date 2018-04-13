@@ -1,6 +1,3 @@
-/**
- * 
- */
 package jbinvis.frontend.hexTable;
 
 import java.util.ArrayList;
@@ -101,5 +98,4 @@ public class HexEditorTableModel extends AbstractTableModel {
 	public boolean isCellEditable(int row, int col) {
 		return true;
 	}	
-
 }

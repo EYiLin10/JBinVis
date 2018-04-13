@@ -1,6 +1,3 @@
-/**
- * 
- */
 package jbinvis.frontend.hexTable;
 
 import java.io.FileInputStream;
@@ -46,7 +43,6 @@ public class ReadBackgroundWorker extends SwingWorker<List<Vector<String>>, Vect
 		// TODO Auto-generated method stub
 		List<Vector<String>> listOfVectors = new ArrayList<Vector<String>>();
 		try {
-			
 			FileInputStream fis = new FileInputStream(this.fileName);
 			int lineLen = gui.panelCols * 2;
 			byte[] bytes = new byte[16];
@@ -64,7 +60,6 @@ public class ReadBackgroundWorker extends SwingWorker<List<Vector<String>>, Vect
 						Vector<String> res = gTransformer.updateEditorRowByRow(gui.hexRead.substring(start, end));
 						listOfVectors.add(res);
 						publish(res);
-						
 					}
 					
 				}
@@ -77,7 +72,6 @@ public class ReadBackgroundWorker extends SwingWorker<List<Vector<String>>, Vect
 				listOfVectors.add(res);
 				publish(res);
 			}
-			
 			fis.close();
 		} catch (Exception e) {
 			System.out.print("Reading of file went wrong!");
@@ -94,5 +88,4 @@ public class ReadBackgroundWorker extends SwingWorker<List<Vector<String>>, Vect
 			model.addRow(v);
 		model.fireTableRowsInserted(n, n + chunks.size());
 	}
-
 }

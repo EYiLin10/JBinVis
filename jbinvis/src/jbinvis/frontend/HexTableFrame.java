@@ -161,3 +161,4 @@ public class HexTableFrame extends JFrame implements QuickEnable, ChangeListener
 	}
 
 }
+

@@ -434,10 +434,5 @@ public class Sphere extends RenderLogic implements FileUpdateListener {
         jbinvis.removeFileUpdateListener(this);
     }
 
-
-	
 }
-
-
-
 

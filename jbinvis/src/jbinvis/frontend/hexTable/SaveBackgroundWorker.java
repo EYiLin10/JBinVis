@@ -1,6 +1,3 @@
-/**
- * 
- */
 package jbinvis.frontend.hexTable;
 
 import java.io.FileOutputStream;
@@ -59,5 +56,4 @@ public class SaveBackgroundWorker extends SwingWorker<Void, String> {
 			gTransformer.updateDisplay(gui.hexRead, "S");
 		}
 	}
-
 }

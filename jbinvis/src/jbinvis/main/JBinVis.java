@@ -1,6 +1,3 @@
-/*
- *  
- */
 package jbinvis.main;
 
 import java.io.IOException;
@@ -146,5 +143,4 @@ public class JBinVis {
         frame.setVisible(true); 
 
     }
-    
 }

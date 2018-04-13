@@ -1,6 +1,3 @@
-/*
- *  
- */
 package jbinvis.frontend;
 
 import jbinvis.frontend.settingspanel.BytemapSettingsPanel;
@@ -581,5 +578,5 @@ public class MainFrame extends javax.swing.JFrame implements FileUpdateListener,
     public static MainFrame getInstance() {
         return _mainframe;
     }
-
 }
+
